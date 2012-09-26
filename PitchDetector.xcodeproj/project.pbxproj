@@ -24,6 +24,7 @@
 		A061FB2312765E99002625EB /* Sound_Wave_Listen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A061FB2212765E99002625EB /* Sound_Wave_Listen.jpg */; };
 		A0C953EF1277C94300BF51F0 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C953EE1277C94300BF51F0 /* CAXException.cpp */; };
 		C950950E126E71140033980B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C950950D126E71140033980B /* AudioToolbox.framework */; };
+		E46366F61613940600AFF701 /* ColorLogo-95.png in Resources */ = {isa = PBXBuildFile; fileRef = E46366F51613940600AFF701 /* ColorLogo-95.png */; };
 		E49E9F59151B4FD900C8E375 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E49E9F58151B4FD900C8E375 /* MainWindow-iPad.xib */; };
 		E49E9F5D151B526400C8E375 /* newgrowth_500.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */; };
 		E4DAFD64160D28AD0064F2B4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4DAFD63160D28AD0064F2B4 /* Default-568h@2x.png */; };
@@ -57,6 +58,7 @@
 		A0C953DD1277C8BA00BF51F0 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		A0C953EE1277C94300BF51F0 /* CAXException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAXException.cpp; sourceTree = "<group>"; };
 		C950950D126E71140033980B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E46366F51613940600AFF701 /* ColorLogo-95.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ColorLogo-95.png"; sourceTree = "<group>"; };
 		E49E9F58151B4FD900C8E375 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = newgrowth_500.jpg; sourceTree = "<group>"; };
 		E4DAFD63160D28AD0064F2B4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				A061FB2212765E99002625EB /* Sound_Wave_Listen.jpg */,
+				E46366F51613940600AFF701 /* ColorLogo-95.png */,
 				A061FB06127643D3002625EB /* ListenerViewController.xib */,
 				E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
@@ -248,6 +251,7 @@
 				E49E9F59151B4FD900C8E375 /* MainWindow-iPad.xib in Resources */,
 				E49E9F5D151B526400C8E375 /* newgrowth_500.jpg in Resources */,
 				E4DAFD64160D28AD0064F2B4 /* Default-568h@2x.png in Resources */,
+				E46366F61613940600AFF701 /* ColorLogo-95.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

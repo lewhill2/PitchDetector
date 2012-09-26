@@ -12,15 +12,8 @@
 
 @implementation ListenerViewController
 
-@synthesize currentPitchLabel;
-@synthesize currentBandsLabel;
-@synthesize listenButton;
-@synthesize key;
-@synthesize prevChar;
-@synthesize isListening;
-@synthesize	rioRef;
-@synthesize currentFrequency;
-@synthesize imageView;
+@synthesize currentPitchLabel, currentBandsLabel, listenButton, key, prevChar, isListening, rioRef;
+@synthesize currentFrequency, imageView,drawMode, colorStepper, scaleSlider;
 
 #pragma mark -
 #pragma mark Listener Controls
@@ -55,6 +48,23 @@
     
     currentFrame = 0;
     
+    scale = 8.0;
+    scaleSlider.value = 8.0;
+    
+    colorMode = DRAW_WHITE;
+    waveDrawMode = WAVE_LINE;
+    
+    
+    for(int i = 0; i < 1024; i++)
+    {
+        for(int j = 0; j < 1024; j++)
+        {
+            outputData[i][j][0] = 0x00;
+            outputData[i][j][1] = 0x00;
+            outputData[i][j][2] = 0x00;
+            outputData[i][j][3] = 0xFF;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,27 +94,27 @@
 	self.currentFrequency = newFrequency;
 	[self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
 	
-
+    
 	/*
 	 * If you want to display letter values for pitches, uncomment this code and
 	 * add your frequency to pitch mappings in KeyHelper.m
-    
-    
-	KeyHelper *helper = [KeyHelper sharedInstance];
-	NSString *closestChar = [helper closestCharForFrequency:newFrequency];
-	
-	// If the new sample has the same frequency as the last one, we should ignore
-	// it. This is a pretty inefficient way of doing comparisons, but it works.
-	if (![prevChar isEqualToString:closestChar]) {
-		self.prevChar = closestChar;
-		if ([closestChar isEqualToString:@"0"]) {
-		//	[self toggleListening:nil];
-		}
-		[self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
-		NSString *appendedString = [key stringByAppendingString:closestChar];
-		self.key = [NSMutableString stringWithString:appendedString];
-	}
-    */
+     
+     
+     KeyHelper *helper = [KeyHelper sharedInstance];
+     NSString *closestChar = [helper closestCharForFrequency:newFrequency];
+     
+     // If the new sample has the same frequency as the last one, we should ignore
+     // it. This is a pretty inefficient way of doing comparisons, but it works.
+     if (![prevChar isEqualToString:closestChar]) {
+     self.prevChar = closestChar;
+     if ([closestChar isEqualToString:@"0"]) {
+     //	[self toggleListening:nil];
+     }
+     [self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
+     NSString *appendedString = [key stringByAppendingString:closestChar];
+     self.key = [NSMutableString stringWithString:appendedString];
+     }
+     */
 	
 	[pool drain];
 	pool = nil;
@@ -114,14 +124,26 @@
 - (void)bandsChangedWithValue:(float*)newBands:(int)n
 {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-
+    
     float maxValItr = 0.0;
     int maxBandItr = 0;
+    
+    currentFrame++;
+    currentFrame = (currentFrame % 1024);
     
     for ( int i = 0; i < n; i+=2 )
     {
         currentBands[currentFrame][i/2] = newBands[i];
-
+        
+        float val = log2(newBands[i]);
+        if(val > 256)
+            val = 256;
+        
+        outputData[currentFrame][i/2][0] = (Byte) val;
+        outputData[currentFrame][i/2][1] = (Byte) 255-val;
+        outputData[currentFrame][i/2][2] = (Byte) 128-val;
+        outputData[currentFrame][i/2][3] = 0xFF;
+        
         if(currentBands[currentFrame][i/2] > maxValItr )
         {
             maxValItr = currentBands[currentFrame][i/2];
@@ -130,15 +152,15 @@
     }
     self->maxBand = maxBandItr;
     self->maxPeak = maxValItr;
-    currentFrame = (currentFrame++) % 1024;
     
 	[self performSelectorInBackground:@selector(updateBandsLabel) withObject:nil];
 	[self performSelectorInBackground:@selector(drawRect) withObject:nil];
+    
 	[pool drain];
 	pool = nil;
     
 }
-		 
+
 - (void)updateFrequencyLabel {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	self.currentPitchLabel.text = [NSString stringWithFormat:@"%f", self.currentFrequency];
@@ -149,7 +171,7 @@
 
 - (void)updateBandsLabel {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	self.currentBandsLabel.text = [NSString stringWithFormat:@"maxPeak = %f maxBand = %d", self->maxPeak, self->maxBand];
+	self.currentBandsLabel.text = [NSString stringWithFormat:@"max %f.2 (%d)", self->maxPeak, self->maxBand];
 	[self.currentBandsLabel setNeedsDisplay];
 	[pool drain];
 	pool = nil;
@@ -158,7 +180,7 @@
 - (void)drawRect
 {
     
-    UIGraphicsBeginImageContext(imageView.image.size);
+    UIGraphicsBeginImageContext(imageView.frame.size);
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     
     // fill the background of the square with grey
@@ -166,55 +188,90 @@
     //CGContextFillRect(currentContext, imageView.image.size);
     
     CGAffineTransform flipVertical =
-        CGAffineTransformMake(1, 0, 0, -1, 0, imageView.image.size.height);
+    CGAffineTransformMake(1, 0, 0, -1, 0, imageView.image.size.height);
     CGContextConcatCTM(currentContext, flipVertical);
-
-    float width = imageView.image.size.width;
-    float width_convert = width / 1024;    
     
-    for(int i = 0; i < 1024; i++)
+    
+    float width = imageView.frame.size.width;
+    
+    if( waveDrawMode == WAVE_LINE )
     {
-        CGContextBeginPath(currentContext);
+        
+        float width_convert = width / 1024;
         
         CGFloat pointColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
         
-        [self getPointColor:pointColor forValue:currentBands[currentFrame][i]];
-        
-        bool drawWhite = YES;
-        if(drawWhite == YES)
-            CGContextSetRGBStrokeColor(currentContext, pointColor[0],
-                                       pointColor[1], pointColor[2], pointColor[3]);
-        else
+        for(int i = 0; i < 1024; i++)
         {
-            CGFloat shiftedColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-            [self transformColor:pointColor
-                         toColor:shiftedColor
-                             byH:currentBands[currentFrame][i]/self->maxPeak];
+            CGContextBeginPath(currentContext);
             
-            CGContextSetStrokeColor(currentContext, shiftedColor);
-
-             NSLog(@"%f, %f, %f, %f/n",shiftedColor[0], shiftedColor[1], shiftedColor[2], shiftedColor[3]);
+            // determine color for drawing mode
+            if( colorMode == DRAW_WHITE )
+            {
+                [self getPointColor:pointColor forValue:currentBands[currentFrame][i]];
+                
+                CGContextSetRGBStrokeColor(currentContext, pointColor[0],
+                                           pointColor[1], pointColor[2], pointColor[3]);
+            }
+            else if( colorMode == PEAK_HIGHLIGHT )
+            {
+                UIColor* segColor = [[UIColor alloc] initWithHue:currentBands[currentFrame][i]/maxPeak + 0.5
+                                                      saturation:1.0
+                                                      brightness:1.0
+                                                           alpha:1.0];
+                CGContextSetStrokeColorWithColor(currentContext, segColor.CGColor);
+            }
+            else if( colorMode == CHROMATIC_SCALE )
+            {
+                UIColor* segColor = [[UIColor alloc] initWithHue:(float)i/1024.0
+                                                      saturation:1.0
+                                                      brightness:1.0
+                                                           alpha:1.0];
+                CGContextSetStrokeColorWithColor(currentContext, segColor.CGColor);
+            }
+            
+            // draw this line segment
+            CGContextMoveToPoint(currentContext, i * width_convert, 0.0f);
+            CGContextAddLineToPoint(currentContext, i * width_convert, scale * log2(currentBands[currentFrame][i]) );
+            CGContextStrokePath(currentContext);
+            
         }
-        CGContextMoveToPoint(currentContext, i * width_convert, 0.0f);
-        CGContextAddLineToPoint(currentContext, i * width_convert, currentBands[currentFrame][i] );
-        CGContextStrokePath(currentContext);
-
+        
+        UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+        imageView.image = newImage;
+        
     }
     
-    imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-
+    if(waveDrawMode == WAVE_TEXTURE)
+    {
+        const int w = 1024;
+        const int h = 1024;
+        CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
+        CGContextRef bitmapContext=CGBitmapContextCreate(outputData, w, h, 8, 4*w, colorSpace,  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
+        CFRelease(colorSpace);
+        CGImageRef cgImage=CGBitmapContextCreateImage(bitmapContext);
+        CGContextRelease(bitmapContext);
+        
+        UIImage * newImage = [UIImage imageWithCGImage:cgImage];
+        CGImageRelease(cgImage);
+        
+        imageView.image = newImage;
+        
+    }
+    
+    
     UIGraphicsEndImageContext(); // Add this line.
 }
 
 -(void) getPointColor:(CGFloat*)out_color
-          forValue:(float)voltage
+             forValue:(float)voltage
 {
-    if(voltage > 100)
+    
+    if(voltage > 150)
     {
         out_color[0] = 1.0;
         out_color[1] = 0.2;
-        out_color[2] = 0.5;
+        out_color[2] = 0.2;
         out_color[3] = 1.0;
     }
     else if(voltage > 50)
@@ -224,38 +281,44 @@
         out_color[2] = 0.2;
         out_color[3] = 1.0;
     }
-    else if(voltage > 0)
+    else if(voltage > 10)
     {
-        out_color[0] = 0.2;
-        out_color[1] = 0.1;
+        out_color[0] = 0.3;
+        out_color[1] = 0.15;
         out_color[2] = 1.0;
         out_color[3] = 1.0;
     }
-    
+    else if(voltage > 0)
+    {
+        out_color[0] = 0.1;
+        out_color[1] = 0.0;
+        out_color[2] = 0.8;
+        out_color[3] = 1.0;
+    }
 }
 
--(void) transformColor:(CGFloat[])in_color
-               toColor:(CGFloat[])out_color
-                   byH:(float)H
+-(IBAction)sliderValueChanged:(UISlider *)sender
 {
-    float U = cos(H*M_PI/180);
-    float W = sin(H*M_PI/180);
-    
-    out_color[0] = (.701*U+.168*W)*in_color[0]
-    + (-.587*U+.330*W)*in_color[1]
-    + (-.114*U-.497*W)*in_color[2];
-
-    out_color[1] = (-.299*U-.328*W)*in_color[0]
-    + (.413*U+.035*W)*in_color[1]
-    + (-.114*U+.292*W)*in_color[2];
-    
-    out_color[2] = (-.3*U+1.25*W)*in_color[0]
-    + (-.588*U-1.05*W)*in_color[1]
-    + (.886*U-.203*W)*in_color[2];
-    
-    out_color[3] = in_color[3];
+    scale = sender.value;
 }
 
+- (IBAction)drawModeChangedAction:(id)sender
+{
+    if (drawMode.selectedSegmentIndex == 0)
+        waveDrawMode = WAVE_LINE;
+    else
+        waveDrawMode = WAVE_TEXTURE;
+}
+
+-(IBAction)colorModeChangedAction:(id)sender
+{
+    if(colorStepper.value == 0)
+        colorMode = PEAK_HIGHLIGHT;
+    else if(colorStepper.value == 1)
+        colorMode = CHROMATIC_SCALE;
+    else if(colorStepper.value == 2)
+        colorMode = DRAW_WHITE;
+}
 
 
 @end
