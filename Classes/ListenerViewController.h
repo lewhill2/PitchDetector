@@ -40,6 +40,8 @@ typedef enum {
 	NSString *prevChar;
     float scale;
     
+    int numRows;
+    
     float currentBands[1024][1024];
     Byte outputData[1024][1024][4];
     
@@ -77,6 +79,6 @@ typedef enum {
 - (void)getPointColor:(CGFloat*)out_color
              forValue:(float)voltage;
 
-
+-(void) colorImageRow:(int)row;
 
 @end

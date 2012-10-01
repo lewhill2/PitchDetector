@@ -135,21 +135,13 @@
     {
         currentBands[currentFrame][i/2] = newBands[i];
         
-        float val = log2(newBands[i]);
-        if(val > 256)
-            val = 256;
-        
-        outputData[currentFrame][i/2][0] = (Byte) val;
-        outputData[currentFrame][i/2][1] = (Byte) 255-val;
-        outputData[currentFrame][i/2][2] = (Byte) 128-val;
-        outputData[currentFrame][i/2][3] = 0xFF;
-        
         if(currentBands[currentFrame][i/2] > maxValItr )
         {
             maxValItr = currentBands[currentFrame][i/2];
             maxBandItr = i;
         }
     }
+    
     self->maxBand = maxBandItr;
     self->maxPeak = maxValItr;
     
@@ -159,6 +151,59 @@
 	[pool drain];
 	pool = nil;
     
+}
+
+// this fills in the pixels across one row (timepoint) of the data.
+-(void) colorImageRow:(int)row
+{
+    assert(row < 1024);
+
+    CGFloat pointColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    UIColor *segColor = [UIColor alloc];
+
+    
+    for(int i = 0; i < 1024; i++) // across the columns.
+    {
+        float value = scale * log2(currentBands[currentFrame][i]);
+        
+        // determine color for drawing mode
+        if( colorMode == DRAW_WHITE )
+        {
+            [self getPointColor:pointColor forValue:value];
+            
+            outputData[row][i][0] = (Byte) pointColor[0]*255;
+            outputData[row][i][1] = (Byte) pointColor[1]*255;
+            outputData[row][i][2] = (Byte) pointColor[2]*255;
+            outputData[row][i][3] = 0xFF;
+
+        }
+        else if( colorMode == PEAK_HIGHLIGHT )
+        {
+            [segColor initWithHue:value/maxPeak + 0.5
+                       saturation:1.0
+                       brightness:1.0
+                            alpha:1.0];
+
+            const CGFloat* colors = CGColorGetComponents( segColor.CGColor );
+            outputData[currentFrame][i][0] = colors[0] * 255;
+            outputData[currentFrame][i][1] = colors[1] * 255;
+            outputData[currentFrame][i][2] = colors[2] * 255;
+            outputData[currentFrame][i][3] = 0xFF;
+        }
+        else if( colorMode == CHROMATIC_SCALE )
+        {
+            [segColor initWithHue:(float)i/1024.0
+                      saturation:1.0
+                      brightness:1.0
+                           alpha:1.0];
+            const CGFloat* colors = CGColorGetComponents( segColor.CGColor );
+            outputData[currentFrame][i][0] = colors[0] * 255;
+            outputData[currentFrame][i][1] = colors[1] * 255;
+            outputData[currentFrame][i][2] = colors[2] * 255;
+            outputData[currentFrame][i][3] = 0xFF;
+
+        }
+    }
 }
 
 - (void)updateFrequencyLabel {
@@ -244,6 +289,9 @@
     
     if(waveDrawMode == WAVE_TEXTURE)
     {
+        if(self->waveDrawMode == WAVE_TEXTURE)
+            [self colorImageRow:currentFrame];
+
         const int w = 1024;
         const int h = 1024;
         CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
