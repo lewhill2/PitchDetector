@@ -22,6 +22,11 @@ typedef enum {
 } WaveDrawMode;
 
 
+typedef enum {
+    WAVE_LINEAR_SCALE = 0,
+    WAVE_LOG_SCALE = 1
+} WaveAxisScale;
+
 @interface ListenerViewController : UIViewController {
     
     UILabel *currentPitchLabel;
@@ -39,22 +44,25 @@ typedef enum {
     int currentFrame;
 	NSString *prevChar;
     float scale;
-    
-    int numRows;
+    int textureHeight;
     
     float currentBands[1024][1024];
     Byte outputData[1024][1024][4];
+    CGFloat pointColor[4];
     
     WaveDrawMode waveDrawMode;
     ColorMode colorMode;
+    WaveAxisScale yAxisScale;
 }
 
 @property(nonatomic, retain) IBOutlet UILabel *currentPitchLabel;
 @property(nonatomic, retain) IBOutlet UILabel *currentBandsLabel;
 @property(nonatomic, retain) IBOutlet UIButton *listenButton;
 @property(nonatomic, retain) IBOutlet UISlider *scaleSlider;
+@property(nonatomic, retain) IBOutlet UISlider *textureLengthSlider;
 @property(nonatomic, retain) IBOutlet UIStepper *colorStepper;
 @property(nonatomic, retain) IBOutlet UISegmentedControl *drawMode;
+@property(nonatomic, retain) IBOutlet UISegmentedControl *logLinMode;
 
 @property(nonatomic, retain) NSMutableString *key;
 @property(nonatomic, retain) NSString *prevChar;
@@ -69,7 +77,9 @@ typedef enum {
 - (void)startListener;
 - (void)stopListener;
 -(IBAction)sliderValueChanged:(UISlider *)sender;
+-(IBAction)textureLengthValueChanged:(UISlider *)sender;
 -(IBAction)drawModeChangedAction:(id)sender;
+-(IBAction)logLinModeChangedAction:(id)sender;
 -(IBAction)colorModeChangedAction:(id)sender;
 
 - (void)frequencyChangedWithValue:(float)newFrequency;

@@ -13,7 +13,7 @@
 @implementation ListenerViewController
 
 @synthesize currentPitchLabel, currentBandsLabel, listenButton, key, prevChar, isListening, rioRef;
-@synthesize currentFrequency, imageView,drawMode, colorStepper, scaleSlider;
+@synthesize currentFrequency, imageView,drawMode, colorStepper, scaleSlider, textureLengthSlider, logLinMode;
 
 #pragma mark -
 #pragma mark Listener Controls
@@ -53,7 +53,7 @@
     
     colorMode = DRAW_WHITE;
     waveDrawMode = WAVE_LINE;
-    
+    yAxisScale = WAVE_LINEAR_SCALE;
     
     for(int i = 0; i < 1024; i++)
     {
@@ -65,6 +65,12 @@
             outputData[i][j][3] = 0xFF;
         }
     }
+    
+    pointColor[0] = pointColor[1] = pointColor[2] = pointColor[3] = 0.0;
+    
+    textureHeight = 128;
+    textureLengthSlider.value = 128;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -129,7 +135,7 @@
     int maxBandItr = 0;
     
     currentFrame++;
-    currentFrame = (currentFrame % 1024);
+    currentFrame = (currentFrame % textureHeight);
     
     for ( int i = 0; i < n; i+=2 )
     {
@@ -158,10 +164,6 @@
 {
     assert(row < 1024);
 
-    CGFloat pointColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    UIColor *segColor = [UIColor alloc];
-
-    
     for(int i = 0; i < 1024; i++) // across the columns.
     {
         float value = scale * log2(currentBands[currentFrame][i]);
@@ -179,28 +181,30 @@
         }
         else if( colorMode == PEAK_HIGHLIGHT )
         {
-            [segColor initWithHue:value/maxPeak + 0.5
-                       saturation:1.0
-                       brightness:1.0
-                            alpha:1.0];
-
-            const CGFloat* colors = CGColorGetComponents( segColor.CGColor );
-            outputData[currentFrame][i][0] = colors[0] * 255;
-            outputData[currentFrame][i][1] = colors[1] * 255;
-            outputData[currentFrame][i][2] = colors[2] * 255;
-            outputData[currentFrame][i][3] = 0xFF;
+            ;
+            const CGFloat* colors =
+                CGColorGetComponents([UIColor colorWithHue:(value/maxPeak + 0.5)
+                                               saturation:1.0
+                                               brightness:1.0
+                                                    alpha:1.0].CGColor );
+            
+            outputData[row][i][0] = (Byte) colors[0] * 255;
+            outputData[row][i][1] = (Byte) colors[1] * 255;
+            outputData[row][i][2] = (Byte) colors[2] * 255;
+            outputData[row][i][3] = 0xFF;
         }
         else if( colorMode == CHROMATIC_SCALE )
         {
-            [segColor initWithHue:(float)i/1024.0
-                      saturation:1.0
-                      brightness:1.0
-                           alpha:1.0];
-            const CGFloat* colors = CGColorGetComponents( segColor.CGColor );
-            outputData[currentFrame][i][0] = colors[0] * 255;
-            outputData[currentFrame][i][1] = colors[1] * 255;
-            outputData[currentFrame][i][2] = colors[2] * 255;
-            outputData[currentFrame][i][3] = 0xFF;
+            
+            const CGFloat* colors =
+            CGColorGetComponents([UIColor colorWithHue:(float)i/1024.0
+                                             saturation:1.0
+                                             brightness:1.0
+                                                  alpha:1.0].CGColor );
+            outputData[row][i][0] = (Byte) colors[0] * 255;
+            outputData[row][i][1] = (Byte) colors[1] * 255;
+            outputData[row][i][2] = (Byte) colors[2] * 255;
+            outputData[row][i][3] = 0xFF;
 
         }
     }
@@ -208,7 +212,7 @@
 
 - (void)updateFrequencyLabel {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	self.currentPitchLabel.text = [NSString stringWithFormat:@"%f", self.currentFrequency];
+	[self.currentPitchLabel setText:[NSString stringWithFormat:@"%.2f", self.currentFrequency]];
 	[self.currentPitchLabel setNeedsDisplay];
 	[pool drain];
 	pool = nil;
@@ -216,7 +220,7 @@
 
 - (void)updateBandsLabel {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	self.currentBandsLabel.text = [NSString stringWithFormat:@"max %f.2 (%d)", self->maxPeak, self->maxBand];
+	[self.currentBandsLabel setText:[NSString stringWithFormat:@"peak %3.2f (%d)", self->maxPeak, self->maxBand]];
 	[self.currentBandsLabel setNeedsDisplay];
 	[pool drain];
 	pool = nil;
@@ -244,8 +248,6 @@
         
         float width_convert = width / 1024;
         
-        CGFloat pointColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-        
         for(int i = 0; i < 1024; i++)
         {
             CGContextBeginPath(currentContext);
@@ -260,31 +262,40 @@
             }
             else if( colorMode == PEAK_HIGHLIGHT )
             {
-                UIColor* segColor = [[UIColor alloc] initWithHue:currentBands[currentFrame][i]/maxPeak + 0.5
-                                                      saturation:1.0
-                                                      brightness:1.0
-                                                           alpha:1.0];
-                CGContextSetStrokeColorWithColor(currentContext, segColor.CGColor);
+                CGContextSetStrokeColorWithColor(
+                     currentContext,
+                     [UIColor colorWithHue:currentBands[currentFrame][i]/(maxPeak + 0.5)
+                                saturation:1.0
+                                brightness:1.0
+                                     alpha:1.0].CGColor);
             }
             else if( colorMode == CHROMATIC_SCALE )
             {
-                UIColor* segColor = [[UIColor alloc] initWithHue:(float)i/1024.0
-                                                      saturation:1.0
-                                                      brightness:1.0
-                                                           alpha:1.0];
-                CGContextSetStrokeColorWithColor(currentContext, segColor.CGColor);
+                CGContextSetStrokeColorWithColor(
+                     currentContext,
+                     [UIColor colorWithHue:(float)i/1024.0
+                                saturation:1.0
+                                brightness:1.0
+                                     alpha:1.0].CGColor);
             }
             
+            float val;
+            if(yAxisScale == WAVE_LOG_SCALE)
+                val = scale * log2(currentBands[currentFrame][i]);
+            else if(yAxisScale == WAVE_LINEAR_SCALE)
+                val = scale * currentBands[currentFrame][i];
+
+            float xPos = i * width_convert;
+            
             // draw this line segment
-            CGContextMoveToPoint(currentContext, i * width_convert, 0.0f);
-            CGContextAddLineToPoint(currentContext, i * width_convert, scale * log2(currentBands[currentFrame][i]) );
+            CGContextMoveToPoint(currentContext, xPos, 0.0f);
+            CGContextAddLineToPoint(currentContext, xPos, val);
             CGContextStrokePath(currentContext);
             
         }
         
         UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-        imageView.image = newImage;
-        
+        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
     }
     
     if(waveDrawMode == WAVE_TEXTURE)
@@ -293,7 +304,7 @@
             [self colorImageRow:currentFrame];
 
         const int w = 1024;
-        const int h = 1024;
+        const int h = textureHeight;
         CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
         CGContextRef bitmapContext=CGBitmapContextCreate(outputData, w, h, 8, 4*w, colorSpace,  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
         CFRelease(colorSpace);
@@ -303,7 +314,7 @@
         UIImage * newImage = [UIImage imageWithCGImage:cgImage];
         CGImageRelease(cgImage);
         
-        imageView.image = newImage;
+        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
         
     }
     
@@ -348,6 +359,19 @@
 -(IBAction)sliderValueChanged:(UISlider *)sender
 {
     scale = sender.value;
+    [self.currentBandsLabel performSelectorOnMainThread:@selector(setText:)
+                                             withObject:[NSString stringWithFormat:@"Scale = %.2f", scale]
+                                          waitUntilDone:NO];
+}
+
+-(IBAction)textureLengthValueChanged:(UISlider *)sender
+{
+    textureHeight = sender.value;
+    if(textureHeight < 0)
+        textureHeight = 4;
+    [self.currentBandsLabel performSelectorOnMainThread:@selector(setText:)
+                                             withObject:[NSString stringWithFormat:@"TextureLength = %d", textureHeight]
+                                          waitUntilDone:NO];
 }
 
 - (IBAction)drawModeChangedAction:(id)sender
@@ -357,6 +381,15 @@
     else
         waveDrawMode = WAVE_TEXTURE;
 }
+
+-(IBAction)logLinModeChangedAction:(id)sender
+{
+    if (logLinMode.selectedSegmentIndex == 0)
+        yAxisScale = WAVE_LINEAR_SCALE;
+    else
+        yAxisScale = WAVE_LOG_SCALE;
+}
+
 
 -(IBAction)colorModeChangedAction:(id)sender
 {
