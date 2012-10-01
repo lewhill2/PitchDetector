@@ -25,6 +25,11 @@
 		A0C953EF1277C94300BF51F0 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C953EE1277C94300BF51F0 /* CAXException.cpp */; };
 		C950950E126E71140033980B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C950950D126E71140033980B /* AudioToolbox.framework */; };
 		E46366F61613940600AFF701 /* ColorLogo-95.png in Resources */ = {isa = PBXBuildFile; fileRef = E46366F51613940600AFF701 /* ColorLogo-95.png */; };
+		E46A5952161A2BC700467198 /* pitchicon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5951161A2BC700467198 /* pitchicon_114x114.png */; };
+		E46A5954161A319500467198 /* pitch_detector_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5953161A319500467198 /* pitch_detector_57x57.png */; };
+		E46A5956161A320800467198 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5955161A320800467198 /* Default.png */; };
+		E46A5958161A321400467198 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5957161A321400467198 /* Default@2x.png */; };
+		E46A595A161A33A500467198 /* PITCH DETECTOR 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */; };
 		E49E9F59151B4FD900C8E375 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E49E9F58151B4FD900C8E375 /* MainWindow-iPad.xib */; };
 		E49E9F5D151B526400C8E375 /* newgrowth_500.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */; };
 		E4DAFD64160D28AD0064F2B4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4DAFD63160D28AD0064F2B4 /* Default-568h@2x.png */; };
@@ -59,6 +64,11 @@
 		A0C953EE1277C94300BF51F0 /* CAXException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAXException.cpp; sourceTree = "<group>"; };
 		C950950D126E71140033980B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E46366F51613940600AFF701 /* ColorLogo-95.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ColorLogo-95.png"; sourceTree = "<group>"; };
+		E46A5951161A2BC700467198 /* pitchicon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pitchicon_114x114.png; sourceTree = "<group>"; };
+		E46A5953161A319500467198 /* pitch_detector_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pitch_detector_57x57.png; sourceTree = "<group>"; };
+		E46A5955161A320800467198 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		E46A5957161A321400467198 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PITCH DETECTOR 114x114.png"; sourceTree = "<group>"; };
 		E49E9F58151B4FD900C8E375 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = newgrowth_500.jpg; sourceTree = "<group>"; };
 		E4DAFD63160D28AD0064F2B4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -104,6 +114,11 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */,
+				E46A5957161A321400467198 /* Default@2x.png */,
+				E46A5955161A320800467198 /* Default.png */,
+				E46A5953161A319500467198 /* pitch_detector_57x57.png */,
+				E46A5951161A2BC700467198 /* pitchicon_114x114.png */,
 				E4DAFD63160D28AD0064F2B4 /* Default-568h@2x.png */,
 				A04F83C6127292C400B590A1 /* Singletons */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -252,6 +267,11 @@
 				E49E9F5D151B526400C8E375 /* newgrowth_500.jpg in Resources */,
 				E4DAFD64160D28AD0064F2B4 /* Default-568h@2x.png in Resources */,
 				E46366F61613940600AFF701 /* ColorLogo-95.png in Resources */,
+				E46A5952161A2BC700467198 /* pitchicon_114x114.png in Resources */,
+				E46A5954161A319500467198 /* pitch_detector_57x57.png in Resources */,
+				E46A5956161A320800467198 /* Default.png in Resources */,
+				E46A5958161A321400467198 /* Default@2x.png in Resources */,
+				E46A595A161A33A500467198 /* PITCH DETECTOR 114x114.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,7 +335,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = SafeSound;
-				PROVISIONING_PROFILE = "FF56717C-809B-4108-BDE6-63E41314850C";
+				PROVISIONING_PROFILE = "0600BD11-DCB4-42C3-AEAC-44416BF82638";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -331,7 +351,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "FF56717C-809B-4108-BDE6-63E41314850C";
+				PROVISIONING_PROFILE = "0600BD11-DCB4-42C3-AEAC-44416BF82638";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

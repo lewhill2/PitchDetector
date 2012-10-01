@@ -121,8 +121,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "392"
          endingLineNumber = "392"
-         landmarkName = "-logLinModeChangedAction:"
-         landmarkType = "5">
+         landmarkName = "@implementation ListenerViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -134,7 +134,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "394"
          endingLineNumber = "394"
-         landmarkName = "-logLinModeChangedAction:"
+         landmarkName = "-colorModeChangedAction:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
