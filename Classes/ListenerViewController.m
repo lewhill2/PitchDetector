@@ -55,6 +55,7 @@
     waveDrawMode = WAVE_LINE;
     yAxisScale = WAVE_LINEAR_SCALE;
     
+    
     for(int i = 0; i < 1024; i++)
     {
         for(int j = 0; j < 1024; j++)
@@ -64,12 +65,15 @@
             outputData[i][j][2] = 0x00;
             outputData[i][j][3] = 0xFF;
         }
+        cosLookup[i] = cos(M_PI_2 * i/1024.0);
+        sinLookup[i] = sin(M_PI_2 * i/1024.0);
     }
     
     pointColor[0] = pointColor[1] = pointColor[2] = pointColor[3] = 0.0;
     
     textureHeight = 128;
     textureLengthSlider.value = 128;
+    
     
 }
 
@@ -96,10 +100,12 @@
 // This method gets called by the rendering function. Update the UI with
 // the character type and store it in our string.
 - (void)frequencyChangedWithValue:(float)newFrequency{
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+
 	self.currentFrequency = newFrequency;
-	[self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
-	
+    
+    pitchUpdateCount++;
+    if (pitchUpdateCount % 4 == 0)
+        [self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
     
 	/*
 	 * If you want to display letter values for pitches, uncomment this code and
@@ -122,41 +128,43 @@
      }
      */
 	
-	[pool drain];
-	pool = nil;
 	
 }
 
 - (void)bandsChangedWithValue:(float*)newBands:(int)n
 {
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    
-    float maxValItr = 0.0;
-    int maxBandItr = 0;
     
     currentFrame++;
     currentFrame = (currentFrame % textureHeight);
     
     for ( int i = 0; i < n; i+=2 )
-    {
         currentBands[currentFrame][i/2] = newBands[i];
-        
-        if(currentBands[currentFrame][i/2] > maxValItr )
+    
+    // compute/update freq and peak every 16 frames
+    if( currentFrame % 16 == 0) // compute max val infrequently
+    {
+        float maxValItr = 0.0;
+        int maxBandItr = 0;
+
+        for ( int i = 0; i < n; i+=2 )
         {
-            maxValItr = currentBands[currentFrame][i/2];
-            maxBandItr = i;
+            if(currentBands[currentFrame][i/2] > maxValItr )
+            {
+                maxValItr = currentBands[currentFrame][i/2];
+                maxBandItr = i;
+            }
+            self->maxBand = maxBandItr;
+            self->maxPeak = maxValItr;
         }
+
+        [self performSelectorInBackground:@selector(updateBandsLabel) withObject:nil];
     }
-    
-    self->maxBand = maxBandItr;
-    self->maxPeak = maxValItr;
-    
-	[self performSelectorInBackground:@selector(updateBandsLabel) withObject:nil];
-	[self performSelectorInBackground:@selector(drawRect) withObject:nil];
-    
-	[pool drain];
-	pool = nil;
-    
+
+    // draw the image every other frame
+    if( currentFrame % 2 == 0) // compute max val and image infrequently
+    {
+        [self performSelectorInBackground:@selector(drawRect) withObject:nil];
+    }
 }
 
 // this fills in the pixels across one row (timepoint) of the data.
@@ -166,7 +174,7 @@
 
     for(int i = 0; i < 1024; i++) // across the columns.
     {
-        float value = scale * log2(currentBands[currentFrame][i]);
+        float value = scale * log2(currentBands[row][i]);
         
         // determine color for drawing mode
         if( colorMode == DRAW_WHITE )
@@ -183,7 +191,7 @@
         {
             ;
             const CGFloat* colors =
-                CGColorGetComponents([UIColor colorWithHue:(value/maxPeak + 0.5)
+                CGColorGetComponents([UIColor colorWithHue:(value + 0.5)
                                                saturation:1.0
                                                brightness:1.0
                                                     alpha:1.0].CGColor );
@@ -211,19 +219,11 @@
 }
 
 - (void)updateFrequencyLabel {
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	[self.currentPitchLabel setText:[NSString stringWithFormat:@"%.2f", self.currentFrequency]];
-	[self.currentPitchLabel setNeedsDisplay];
-	[pool drain];
-	pool = nil;
 }
 
 - (void)updateBandsLabel {
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	[self.currentBandsLabel setText:[NSString stringWithFormat:@"peak %3.2f (%d)", self->maxPeak, self->maxBand]];
-	[self.currentBandsLabel setNeedsDisplay];
-	[pool drain];
-	pool = nil;
+    [self.currentBandsLabel setText:[NSString stringWithFormat:@"peak %3.2f (%d)", self->maxPeak, self->maxBand]];
 }
 
 - (void)drawRect
@@ -242,6 +242,7 @@
     
     
     float width = imageView.frame.size.width;
+    float height = imageView.frame.size.height;
     
     if( waveDrawMode == WAVE_LINE )
     {
@@ -291,6 +292,77 @@
             CGContextMoveToPoint(currentContext, xPos, 0.0f);
             CGContextAddLineToPoint(currentContext, xPos, val);
             CGContextStrokePath(currentContext);
+        }
+        
+        UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
+    }
+    
+    if( waveDrawMode == WAVE_FLOWER)
+    {
+        
+        
+        for(int i = 0; i < 1024; i++)
+        {
+            CGContextBeginPath(currentContext);
+            
+            // determine color for drawing mode
+            if( colorMode == DRAW_WHITE )
+            {
+                [self getPointColor:pointColor forValue:currentBands[currentFrame][i]];
+                
+                CGContextSetRGBStrokeColor(currentContext, pointColor[0],pointColor[1], pointColor[2], pointColor[3]);
+            }
+            else if( colorMode == PEAK_HIGHLIGHT )
+            {
+                CGContextSetStrokeColorWithColor(currentContext,
+                                                 [UIColor colorWithHue:currentBands[currentFrame][i]/(maxPeak + 0.5)
+                                                            saturation:1.0
+                                                            brightness:1.0
+                                                                 alpha:1.0].CGColor);
+            }
+            else if( colorMode == CHROMATIC_SCALE )
+            {
+                CGContextSetStrokeColorWithColor(currentContext,
+                                                 [UIColor colorWithHue:(float)i/1024.0
+                                                            saturation:1.0
+                                                            brightness:1.0
+                                                                 alpha:1.0].CGColor);
+            }
+            
+            float val;
+            if(yAxisScale == WAVE_LOG_SCALE)
+                val = scale * log2(currentBands[currentFrame][i]);
+            else if(yAxisScale == WAVE_LINEAR_SCALE)
+                val = scale * currentBands[currentFrame][i];
+            
+            float xBegin = width/2;
+            float yBegin = height/2;
+            float cosVal = cosLookup[i];
+            float sinVal = sinLookup[i];
+            
+            float xEnd = xBegin + cosVal * val/2;
+            float yEnd = yBegin + sinVal * val/2;
+            CGContextMoveToPoint(currentContext, xBegin, yBegin);
+            CGContextAddLineToPoint(currentContext, xEnd, yEnd);
+
+            xEnd = xBegin - cosVal * val/2;
+            yEnd = yBegin + sinVal * val/2;
+            CGContextMoveToPoint(currentContext, xBegin, yBegin);
+            CGContextAddLineToPoint(currentContext, xEnd, yEnd);
+
+            xEnd = xBegin - cosVal * val/2;
+            yEnd = yBegin - sinVal * val/2;
+            CGContextMoveToPoint(currentContext, xBegin, yBegin);
+            CGContextAddLineToPoint(currentContext, xEnd, yEnd);
+
+            xEnd = xBegin + cosVal * val/2;
+            yEnd = yBegin - sinVal * val/2;
+            CGContextMoveToPoint(currentContext, xBegin, yBegin);
+            CGContextAddLineToPoint(currentContext, xEnd, yEnd);
+
+            CGContextStrokePath(currentContext);
+
             
         }
         
@@ -301,7 +373,15 @@
     if(waveDrawMode == WAVE_TEXTURE)
     {
         if(self->waveDrawMode == WAVE_TEXTURE)
-            [self colorImageRow:currentFrame];
+        {
+            for(int i = lastFrame; i <= currentFrame; i++)
+            {
+                [self colorImageRow:i];
+                if (i > textureHeight)
+                    i =  i % textureHeight;
+            }
+            lastFrame = currentFrame;
+        }
 
         const int w = 1024;
         const int h = textureHeight;
@@ -317,6 +397,8 @@
         [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
         
     }
+    
+    
     
     
     UIGraphicsEndImageContext(); // Add this line.
@@ -378,8 +460,10 @@
 {
     if (drawMode.selectedSegmentIndex == 0)
         waveDrawMode = WAVE_LINE;
-    else
+    else if (drawMode.selectedSegmentIndex == 1)
         waveDrawMode = WAVE_TEXTURE;
+    else if (drawMode.selectedSegmentIndex == 2)
+        waveDrawMode = WAVE_FLOWER;
 }
 
 -(IBAction)logLinModeChangedAction:(id)sender

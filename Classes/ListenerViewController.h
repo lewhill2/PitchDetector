@@ -18,7 +18,8 @@ typedef enum {
 
 typedef enum {
     WAVE_LINE = 0,
-    WAVE_TEXTURE = 1
+    WAVE_TEXTURE = 1,
+    WAVE_FLOWER = 2
 } WaveDrawMode;
 
 
@@ -42,13 +43,18 @@ typedef enum {
     float maxPeak;
     int maxBand;
     int currentFrame;
+    int lastFrame;
 	NSString *prevChar;
     float scale;
     int textureHeight;
+    int pitchUpdateCount;
     
     float currentBands[1024][1024];
     Byte outputData[1024][1024][4];
     CGFloat pointColor[4];
+    
+    float cosLookup[1024];
+    float sinLookup[1024];
     
     WaveDrawMode waveDrawMode;
     ColorMode colorMode;
