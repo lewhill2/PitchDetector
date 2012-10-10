@@ -52,7 +52,8 @@
     scaleSlider.value = 8.0;
     
     colorMode = DRAW_WHITE;
-    waveDrawMode = WAVE_LINE;
+    waveDrawMode = WAVE_FLOWER;
+    drawMode.selectedSegmentIndex = 2;
     yAxisScale = WAVE_LINEAR_SCALE;
     
     
@@ -205,8 +206,8 @@
         {
             
             const CGFloat* colors =
-            CGColorGetComponents([UIColor colorWithHue:(float)i/1024.0
-                                             saturation:1.0
+            CGColorGetComponents([UIColor colorWithHue:((float)i)/1024.0
+                                            saturation:value/maxPeak
                                              brightness:1.0
                                                   alpha:1.0].CGColor );
             outputData[row][i][0] = (Byte) colors[0] * 255;
@@ -248,7 +249,8 @@
     {
         
         float width_convert = width / 1024;
-        
+        float val = 0.0;
+
         for(int i = 0; i < 1024; i++)
         {
             CGContextBeginPath(currentContext);
@@ -280,7 +282,6 @@
                                      alpha:1.0].CGColor);
             }
             
-            float val;
             if(yAxisScale == WAVE_LOG_SCALE)
                 val = scale * log2(currentBands[currentFrame][i]);
             else if(yAxisScale == WAVE_LINEAR_SCALE)
