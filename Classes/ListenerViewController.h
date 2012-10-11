@@ -28,7 +28,7 @@ typedef enum {
     WAVE_LOG_SCALE = 1
 } WaveAxisScale;
 
-@interface ListenerViewController : UIViewController {
+@interface ListenerViewController : UIViewController  <UIAccelerometerDelegate> {
     
     UILabel *currentPitchLabel;
 	UILabel *currentBandsLabel;
@@ -56,6 +56,8 @@ typedef enum {
     float cosLookup[1024];
     float sinLookup[1024];
     
+    float accel[3];
+    
     WaveDrawMode waveDrawMode;
     ColorMode colorMode;
     WaveAxisScale yAxisScale;
@@ -76,6 +78,8 @@ typedef enum {
 @property(nonatomic, assign) float currentFrequency;
 @property(nonatomic, assign) IBOutlet UIImageView* imageView;
 @property(assign) BOOL isListening;
+
+@property (nonatomic, retain) UIAccelerometer *accelerometer;
 
 
 #pragma mark Listener Controls

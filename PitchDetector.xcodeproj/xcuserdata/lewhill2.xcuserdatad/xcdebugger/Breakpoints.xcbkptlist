@@ -77,150 +77,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "184"
-         endingLineNumber = "184"
-         landmarkName = "-colorImageRow:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "200"
-         endingLineNumber = "200"
-         landmarkName = "-colorImageRow:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "260"
-         endingLineNumber = "260"
-         landmarkName = "-drawRect"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "477"
-         endingLineNumber = "477"
-         landmarkName = "@implementation ListenerViewController"
-         landmarkType = "3">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "479"
-         endingLineNumber = "479"
-         landmarkName = "-colorModeChangedAction:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "277"
-         endingLineNumber = "277"
-         landmarkName = "-drawRect"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "183"
-         endingLineNumber = "183"
-         landmarkName = "-colorImageRow:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "346"
-         endingLineNumber = "346"
-         landmarkName = "-drawRect"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "343"
-         endingLineNumber = "343"
-         landmarkName = "-drawRect"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "345"
-         endingLineNumber = "345"
-         landmarkName = "-drawRect"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "176"
-         endingLineNumber = "176"
-         landmarkName = "-colorImageRow:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
+         timestampString = "371583185.14438"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "195"
@@ -233,12 +90,181 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Classes/ListenerViewController.m"
-         timestampString = "371536458.679351"
+         timestampString = "371583185.14438"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "208"
-         endingLineNumber = "208"
+         startingLineNumber = "211"
+         endingLineNumber = "211"
          landmarkName = "-colorImageRow:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "271"
+         endingLineNumber = "271"
+         landmarkName = "-drawRect"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "487"
+         endingLineNumber = "487"
+         landmarkName = "@implementation ListenerViewController"
+         landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "489"
+         endingLineNumber = "489"
+         landmarkName = "-colorModeChangedAction:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "288"
+         endingLineNumber = "288"
+         landmarkName = "-drawRect"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "194"
+         endingLineNumber = "194"
+         landmarkName = "-colorImageRow:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "356"
+         endingLineNumber = "356"
+         landmarkName = "-drawRect"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "353"
+         endingLineNumber = "353"
+         landmarkName = "-drawRect"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "355"
+         endingLineNumber = "355"
+         landmarkName = "-drawRect"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "187"
+         endingLineNumber = "187"
+         landmarkName = "-colorImageRow:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "206"
+         endingLineNumber = "206"
+         landmarkName = "-colorImageRow:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583185.14438"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "219"
+         endingLineNumber = "219"
+         landmarkName = "-colorImageRow:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583757.523266"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "87"
+         endingLineNumber = "87"
+         landmarkName = "-accelerometer:didAccelerate:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Classes/ListenerViewController.m"
+         timestampString = "371583825.005449"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "248"
+         endingLineNumber = "248"
+         landmarkName = "-drawRect"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

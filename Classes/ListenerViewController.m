@@ -13,7 +13,7 @@
 @implementation ListenerViewController
 
 @synthesize currentPitchLabel, currentBandsLabel, listenButton, key, prevChar, isListening, rioRef;
-@synthesize currentFrequency, imageView,drawMode, colorStepper, scaleSlider, textureLengthSlider, logLinMode;
+@synthesize currentFrequency, imageView,drawMode, colorStepper, scaleSlider, textureLengthSlider, logLinMode, accelerometer;
 
 #pragma mark -
 #pragma mark Listener Controls
@@ -75,6 +75,17 @@
     textureHeight = 128;
     textureLengthSlider.value = 128;
     
+    // init accelerometer
+    self.accelerometer = [UIAccelerometer sharedAccelerometer];
+    self.accelerometer.updateInterval = .1;
+    self.accelerometer.delegate = self;
+}
+
+- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
+
+    accel[0] = acceleration.x;
+    accel[1] = acceleration.y;
+    accel[2] = acceleration.z;
     
 }
 
@@ -234,8 +245,8 @@
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     
     // fill the background of the square with grey
-    CGContextSetRGBFillColor(currentContext, 0.5,0.5,0.5,1.0);
-    //CGContextFillRect(currentContext, imageView.image.size);
+    CGContextSetRGBFillColor(currentContext, accel[0], accel[1], accel[2],1.0);
+    CGContextFillRect(currentContext, imageView.frame);
     
     CGAffineTransform flipVertical =
     CGAffineTransformMake(1, 0, 0, -1, 0, imageView.image.size.height);
@@ -301,8 +312,10 @@
     
     if( waveDrawMode == WAVE_FLOWER)
     {
-        
-        
+        float val = 0.0;
+        float xBegin = width/2;
+        float yBegin = height/2;
+
         for(int i = 0; i < 1024; i++)
         {
             CGContextBeginPath(currentContext);
@@ -331,14 +344,11 @@
                                                                  alpha:1.0].CGColor);
             }
             
-            float val;
             if(yAxisScale == WAVE_LOG_SCALE)
                 val = scale * log2(currentBands[currentFrame][i]);
             else if(yAxisScale == WAVE_LINEAR_SCALE)
                 val = scale * currentBands[currentFrame][i];
             
-            float xBegin = width/2;
-            float yBegin = height/2;
             float cosVal = cosLookup[i];
             float sinVal = sinLookup[i];
             
