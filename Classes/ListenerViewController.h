@@ -19,7 +19,8 @@ typedef enum {
 typedef enum {
     WAVE_LINE = 0,
     WAVE_TEXTURE = 1,
-    WAVE_FLOWER = 2
+    WAVE_FLOWER = 2,
+    WAVE_BLOCKS = 3
 } WaveDrawMode;
 
 

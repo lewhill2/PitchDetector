@@ -86,7 +86,6 @@
     accel[0] = acceleration.x;
     accel[1] = acceleration.y;
     accel[2] = acceleration.z;
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -218,7 +217,7 @@
             
             const CGFloat* colors =
             CGColorGetComponents([UIColor colorWithHue:((float)i)/1024.0
-                                            saturation:value/maxPeak
+                                            saturation:value
                                              brightness:1.0
                                                   alpha:1.0].CGColor );
             outputData[row][i][0] = (Byte) colors[0] * 255;
@@ -287,7 +286,7 @@
             {
                 CGContextSetStrokeColorWithColor(
                      currentContext,
-                     [UIColor colorWithHue:(float)i/1024.0
+                     [UIColor colorWithHue:((float)i)/1024.0
                                 saturation:1.0
                                 brightness:1.0
                                      alpha:1.0].CGColor);
@@ -393,7 +392,7 @@
             }
             lastFrame = currentFrame;
         }
-
+        
         const int w = 1024;
         const int h = textureHeight;
         CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
@@ -408,9 +407,36 @@
         [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
         
     }
-    
-    
-    
+
+    if(waveDrawMode == WAVE_BLOCKS)
+    {
+        
+        if(self->waveDrawMode == WAVE_BLOCKS)
+        {
+            for(int i = lastFrame; i <= currentFrame; i++)
+            {
+                [self colorImageRow:i];
+                if (i > textureHeight)
+                    i =  i % textureHeight;
+            }
+            lastFrame = currentFrame;
+        }
+        
+        const int w = 32;
+        const int h = 32;
+
+        CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
+        CGContextRef bitmapContext=CGBitmapContextCreate(outputData[currentFrame], w, h, 8, 4*w, colorSpace,  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
+        CFRelease(colorSpace);
+        CGImageRef cgImage=CGBitmapContextCreateImage(bitmapContext);
+        CGContextRelease(bitmapContext);
+        
+        UIImage * newImage = [UIImage imageWithCGImage:cgImage];
+        CGImageRelease(cgImage);
+        
+        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
+        
+    }
     
     UIGraphicsEndImageContext(); // Add this line.
 }
@@ -475,6 +501,9 @@
         waveDrawMode = WAVE_TEXTURE;
     else if (drawMode.selectedSegmentIndex == 2)
         waveDrawMode = WAVE_FLOWER;
+    else if (drawMode.selectedSegmentIndex == 3)
+        waveDrawMode = WAVE_BLOCKS;
+
 }
 
 -(IBAction)logLinModeChangedAction:(id)sender
