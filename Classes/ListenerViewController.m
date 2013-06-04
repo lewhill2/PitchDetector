@@ -115,7 +115,7 @@
 	self.currentFrequency = newFrequency;
     
     pitchUpdateCount++;
-    if (pitchUpdateCount % 4 == 0)
+    if (pitchUpdateCount % 16 == 0)
         [self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
     
 	/*

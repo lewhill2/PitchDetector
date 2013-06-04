@@ -56,7 +56,7 @@
 		A04F841C1272996900B590A1 /* KeyHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyHelper.m; sourceTree = "<group>"; };
 		A061FB04127643D3002625EB /* ListenerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenerViewController.h; sourceTree = "<group>"; };
 		A061FB05127643D3002625EB /* ListenerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenerViewController.m; sourceTree = "<group>"; };
-		A061FB06127643D3002625EB /* ListenerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ListenerViewController.xib; path = Classes/ListenerViewController.xib; sourceTree = "<group>"; };
+		A061FB06127643D3002625EB /* ListenerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListenerViewController.xib; sourceTree = "<group>"; };
 		A061FB2212765E99002625EB /* Sound_Wave_Listen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sound_Wave_Listen.jpg; sourceTree = "<group>"; };
 		A061FB4C127676C4002625EB /* CAStreamBasicDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStreamBasicDescription.h; sourceTree = "<group>"; };
 		A061FB591276781C002625EB /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
@@ -146,7 +146,6 @@
 			children = (
 				A061FB2212765E99002625EB /* Sound_Wave_Listen.jpg */,
 				E46366F51613940600AFF701 /* ColorLogo-95.png */,
-				A061FB06127643D3002625EB /* ListenerViewController.xib */,
 				E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* PitchDetector-Info.plist */,
@@ -157,14 +156,14 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
-				1D30AB110D05D00D00671497 /* Foundation.framework */,
-				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				A014E9FC1292513100F7F2AB /* Accelerate.framework */,
 				C950950D126E71140033980B /* AudioToolbox.framework */,
 				A04F82B81272202300B590A1 /* AVFoundation.framework */,
-				A04F1A6C12767A05006E8FFA /* CoreFoundation.framework */,
 				A04F1A7012767A12006E8FFA /* CoreAudio.framework */,
-				A014E9FC1292513100F7F2AB /* Accelerate.framework */,
+				A04F1A6C12767A05006E8FFA /* CoreFoundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -185,6 +184,7 @@
 			children = (
 				A061FB04127643D3002625EB /* ListenerViewController.h */,
 				A061FB05127643D3002625EB /* ListenerViewController.m */,
+				A061FB06127643D3002625EB /* ListenerViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -298,17 +298,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: 910 Technologies";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lew Hill (J7C6HZHGGQ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PitchDetector_Prefix.pch;
 				INFOPLIST_FILE = "PitchDetector-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = PitchDetector;
-				PROVISIONING_PROFILE = "B1F6AB0F-C2BC-4A1E-9F01-AB894A2EF87A";
-				TARGETED_DEVICE_FAMILY = 1;
+				PROVISIONING_PROFILE = "18A82318-4C72-45E5-8C68-321A73A109D2";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -316,15 +316,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: 910 Technologies";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lew Hill (J7C6HZHGGQ)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PitchDetector_Prefix.pch;
 				INFOPLIST_FILE = "PitchDetector-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = PitchDetector;
-				PROVISIONING_PROFILE = "B1F6AB0F-C2BC-4A1E-9F01-AB894A2EF87A";
-				TARGETED_DEVICE_FAMILY = 1;
+				PROVISIONING_PROFILE = "18A82318-4C72-45E5-8C68-321A73A109D2";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -339,7 +339,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = SafeSound;
-				PROVISIONING_PROFILE = "4805C4BA-CF10-4636-861C-9A4B61C7C738";
+				PROVISIONING_PROFILE = "18A82318-4C72-45E5-8C68-321A73A109D2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -355,7 +355,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "4805C4BA-CF10-4636-861C-9A4B61C7C738";
+				PROVISIONING_PROFILE = "18A82318-4C72-45E5-8C68-321A73A109D2";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
