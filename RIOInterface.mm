@@ -191,7 +191,7 @@ OSStatus RenderFFTCallback (void					*inRefCon,
 		
 		// Update the UI with our newly acquired frequency value.
 		[THIS->listener frequencyChangedWithValue:bin*(THIS->sampleRate/bufferCapacity)];
-		[THIS->listener bandsChangedWithValue:magSq:n];  
+		[THIS->listener bandsChangedWithValue:magSq numBands:n];
         
         //LH it appears we can can get compute the frequency of a bin by (bin * (THIS->sampleRate/bufferCapacity)
                 

@@ -10,10 +10,12 @@
 #import "RIOInterface.h"
 #import "KeyHelper.h"
 
+#define IS_IPAD	(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
 @implementation ListenerViewController
 
-@synthesize currentPitchLabel, currentBandsLabel, listenButton, key, prevChar, isListening, rioRef;
-@synthesize currentFrequency, imageView,drawMode, colorStepper, scaleSlider, textureLengthSlider, logLinMode, accelerometer;
+@synthesize currentPitchLabel, currentBandsLabel, listenButton, pitchKey, prevChar, isListening, rioRef;
+@synthesize currentFrequency, imageView,drawMode, colorStepper, scaleSlider, textureLengthSlider, logLinMode, accelerometer, controlPanelView;
 
 #pragma mark -
 #pragma mark Listener Controls
@@ -39,11 +41,15 @@
 
 
 
+
 #pragma mark -
 #pragma mark Lifecycle
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    touchCount = 0;
+    
     rioRef = [RIOInterface sharedInstance];
     
     currentFrame = 0;
@@ -79,8 +85,21 @@
     self.accelerometer = [UIAccelerometer sharedAccelerometer];
     self.accelerometer.updateInterval = .1;
     self.accelerometer.delegate = self;
+    
+    // add tap gesture
+    imageView.userInteractionEnabled = true;
+    controlPanelView.hidden = false;
+    
+    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    [imageView addGestureRecognizer: singleTap];
 }
 
+-(void) handleSingleTap:(UITapGestureRecognizer *)gr {
+    NSLog(@"handleSingleTap");
+    controlPanelView.hidden = !controlPanelView.hidden;
+}
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
 
     accel[0] = acceleration.x;
@@ -142,7 +161,7 @@
 	
 }
 
-- (void)bandsChangedWithValue:(float*)newBands:(int)n
+- (void)bandsChangedWithValue:(float*)newBands numBands:(int)n;
 {
     
     currentFrame++;
@@ -247,10 +266,46 @@
     CGContextSetRGBFillColor(currentContext, accel[0], accel[1], accel[2],1.0);
     CGContextFillRect(currentContext, imageView.frame);
     
+    
+    //  draw multi touches
+    CGContextSetRGBFillColor(currentContext, 255, 0, 255, 0.9);
+    CGContextSetRGBStrokeColor(currentContext, 255, 0, 0, 0.9);
+    
+    // draw the dots
+    for(int i = 0; i < touchCount; i++)
+    {
+        CGRect ellipseRect = CGRectMake(touchPoints[i].x, touchPoints[i].y, 40, 40);
+        CGContextFillEllipseInRect(currentContext, ellipseRect);
+    }
+
+    // calculate midpoint of touches
+    float xSum = 0;
+    float ySum = 0;
+    for(int i = 0; i < touchCount; i++)
+    {
+        xSum += touchPoints[i].x;
+        ySum += touchPoints[i].y;
+    }
+    float xAvg = xSum / touchCount;
+    float yAvg = ySum / touchCount;
+    
+    // connect the dots
+    if(touchCount > 0)
+    {
+        CGContextBeginPath(currentContext);
+        for(int i = 0; i < touchCount; i++)
+        {
+            CGContextMoveToPoint(currentContext, xAvg, yAvg);
+            CGContextAddLineToPoint(currentContext, touchPoints[i].x, touchPoints[i].y);
+        }
+        CGContextClosePath(currentContext);
+        CGContextStrokePath(currentContext);
+    }
+    
+    // flip the image 
     CGAffineTransform flipVertical =
     CGAffineTransformMake(1, 0, 0, -1, 0, imageView.image.size.height);
     CGContextConcatCTM(currentContext, flipVertical);
-    
     
     float width = imageView.frame.size.width;
     float height = imageView.frame.size.height;
@@ -372,12 +427,12 @@
             CGContextAddLineToPoint(currentContext, xEnd, yEnd);
 
             CGContextStrokePath(currentContext);
-
-            
         }
         
+        // save image
         UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
         [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
+        
     }
     
     if(waveDrawMode == WAVE_TEXTURE)
@@ -525,5 +580,53 @@
         colorMode = DRAW_WHITE;
 }
 
+-(void) printTouches
+{
+    for(int i = 0; i < touchCount; i++)
+        NSLog(@"Touch %i = %f, %f",i, touchPoints[i].x, touchPoints[i].y);
+}
+
+- (void) touchesBegan:(NSSet *) touches withEvent:(UIEvent *) event
+{
+    int count = 0;
+	for (UITouch *touch in touches)
+	{
+		CGPoint pt = [touch locationInView:imageView];
+        touchPoints[count] = pt;
+        count++;
+	}
+    touchCount = [touches count];
+}
+
+- (void) touchesMoved:(NSSet *) touches withEvent:(UIEvent *) event
+{
+    int count = 0;
+    for (UITouch *touch in touches)
+    {
+        CGPoint pt = [touch locationInView:imageView];
+        touchPoints[count] = pt;
+        count++;
+    }
+    touchCount = [touches count];
+
+}
+
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    int count = 0;
+    for (UITouch *touch in touches)
+    {
+        CGPoint pt = [touch locationInView:imageView];
+        touchPoints[count] = pt;
+        count++;
+    }
+    touchCount = [touches count];
+}
+
+- (void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	[self touchesEnded:touches withEvent:event];
+    touchCount = 0;
+}
 
 @end

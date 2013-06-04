@@ -39,7 +39,7 @@ typedef enum {
 	BOOL isListening;
 	RIOInterface *rioRef;
 	
-	NSMutableString *key;
+	NSMutableString *pitchKey;
 	float currentFrequency;
     float maxPeak;
     int maxBand;
@@ -62,7 +62,12 @@ typedef enum {
     WaveDrawMode waveDrawMode;
     ColorMode colorMode;
     WaveAxisScale yAxisScale;
+    
+    CGPoint touchPoints[20];
+    int touchCount;
 }
+
+@property(nonatomic, retain) IBOutlet UIView *controlPanelView;
 
 @property(nonatomic, retain) IBOutlet UILabel *currentPitchLabel;
 @property(nonatomic, retain) IBOutlet UILabel *currentBandsLabel;
@@ -73,7 +78,7 @@ typedef enum {
 @property(nonatomic, retain) IBOutlet UISegmentedControl *drawMode;
 @property(nonatomic, retain) IBOutlet UISegmentedControl *logLinMode;
 
-@property(nonatomic, retain) NSMutableString *key;
+@property(nonatomic, retain) NSMutableString *pitchKey;
 @property(nonatomic, retain) NSString *prevChar;
 @property(nonatomic, assign) RIOInterface *rioRef;
 @property(nonatomic, assign) float currentFrequency;
@@ -81,6 +86,7 @@ typedef enum {
 @property(assign) BOOL isListening;
 
 @property (nonatomic, retain) UIAccelerometer *accelerometer;
+
 
 
 #pragma mark Listener Controls
@@ -92,9 +98,10 @@ typedef enum {
 -(IBAction)drawModeChangedAction:(id)sender;
 -(IBAction)logLinModeChangedAction:(id)sender;
 -(IBAction)colorModeChangedAction:(id)sender;
+-(void) handleSingleTap:(UITapGestureRecognizer *)gr;
 
 - (void)frequencyChangedWithValue:(float)newFrequency;
-- (void)bandsChangedWithValue:(float*)newBands:(int)n;
+- (void)bandsChangedWithValue:(float*)newBands numBands:(int)n;
 - (void)updateFrequencyLabel;
 - (void)drawRect;
 - (void)getPointColor:(CGFloat*)out_color
