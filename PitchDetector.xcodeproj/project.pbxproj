@@ -30,8 +30,13 @@
 		E46A5956161A320800467198 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5955161A320800467198 /* Default.png */; };
 		E46A5958161A321400467198 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5957161A321400467198 /* Default@2x.png */; };
 		E46A595A161A33A500467198 /* PITCH DETECTOR 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */; };
+		E475D4A6176F814400F6487A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E475D4A5176F814400F6487A /* Crashlytics.framework */; };
 		E49E9F59151B4FD900C8E375 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E49E9F58151B4FD900C8E375 /* MainWindow-iPad.xib */; };
 		E49E9F5D151B526400C8E375 /* newgrowth_500.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */; };
+		E4BC0B411770FA110065E21B /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B401770FA110065E21B /* NewRelicAgent.framework */; };
+		E4BC0B431770FA480065E21B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B421770FA480065E21B /* CoreTelephony.framework */; };
+		E4BC0B451770FA510065E21B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B441770FA510065E21B /* SystemConfiguration.framework */; };
+		E4BC0B471770FA600065E21B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B461770FA600065E21B /* libz.dylib */; };
 		E4DAFD64160D28AD0064F2B4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4DAFD63160D28AD0064F2B4 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -69,8 +74,13 @@
 		E46A5955161A320800467198 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E46A5957161A321400467198 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PITCH DETECTOR 114x114.png"; sourceTree = "<group>"; };
+		E475D4A5176F814400F6487A /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		E49E9F58151B4FD900C8E375 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = newgrowth_500.jpg; sourceTree = "<group>"; };
+		E4BC0B401770FA110065E21B /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
+		E4BC0B421770FA480065E21B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		E4BC0B441770FA510065E21B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E4BC0B461770FA600065E21B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E4DAFD63160D28AD0064F2B4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +89,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4BC0B471770FA600065E21B /* libz.dylib in Frameworks */,
+				E4BC0B451770FA510065E21B /* SystemConfiguration.framework in Frameworks */,
+				E4BC0B431770FA480065E21B /* CoreTelephony.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -87,6 +100,8 @@
 				A04F1A6D12767A05006E8FFA /* CoreFoundation.framework in Frameworks */,
 				A04F1A7112767A12006E8FFA /* CoreAudio.framework in Frameworks */,
 				A014E9FD1292513100F7F2AB /* Accelerate.framework in Frameworks */,
+				E475D4A6176F814400F6487A /* Crashlytics.framework in Frameworks */,
+				E4BC0B411770FA110065E21B /* NewRelicAgent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +129,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E4BC0B461770FA600065E21B /* libz.dylib */,
+				E4BC0B441770FA510065E21B /* SystemConfiguration.framework */,
+				E4BC0B421770FA480065E21B /* CoreTelephony.framework */,
 				E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */,
 				E46A5957161A321400467198 /* Default@2x.png */,
 				E46A5955161A320800467198 /* Default.png */,
@@ -156,6 +174,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4BC0B401770FA110065E21B /* NewRelicAgent.framework */,
+				E475D4A5176F814400F6487A /* Crashlytics.framework */,
 				A014E9FC1292513100F7F2AB /* Accelerate.framework */,
 				C950950D126E71140033980B /* AudioToolbox.framework */,
 				A04F82B81272202300B590A1 /* AVFoundation.framework */,
@@ -218,6 +238,7 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				E475D4A4176F80EA00F6487A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -277,6 +298,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E475D4A4176F80EA00F6487A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 24998ac365c4d6508912b2c9dcfa520457ae894d";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -300,6 +337,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Lew Hill (J7C6HZHGGQ)";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -318,6 +359,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Lew Hill (J7C6HZHGGQ)";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = PitchDetector_Prefix.pch;
 				INFOPLIST_FILE = "PitchDetector-Info.plist";
