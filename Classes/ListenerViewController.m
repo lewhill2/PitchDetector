@@ -284,7 +284,6 @@
     CGContextSetRGBFillColor(currentContext, accel[0], accel[1], accel[2],1.0);
     CGContextFillRect(currentContext, imageView.frame);
     
-    
     //  draw multi touches
     CGContextSetRGBFillColor(currentContext, 255, 0, 255, 0.9);
     CGContextSetRGBStrokeColor(currentContext, 255, 0, 0, 0.9);
@@ -395,8 +394,10 @@
     if( waveDrawMode == WAVE_FLOWER)
     {
         float val = 0.0;
-        float xBegin = width/2;
-        float yBegin = height/2;
+        float x1, y1, x2, y2, x3, y3, x4, y4;
+        float cosVal;
+        float sinVal;
+
         
         for(int i = 0; i < 1024; i++)
         {
@@ -440,29 +441,23 @@
             else if(yAxisScale == WAVE_LINEAR_SCALE)
                 val = scale * currentBands[currentFrame][i];
             
-            float cosVal = cosLookup[i];
-            float sinVal = sinLookup[i];
+            cosVal = cosLookup[i];
+            sinVal = sinLookup[i];
             
-            float xEnd = xBegin + cosVal * val/2;
-            float yEnd = yBegin + sinVal * val/2;
-            CGContextMoveToPoint(currentContext, xBegin, yBegin);
-            CGContextAddLineToPoint(currentContext, xEnd, yEnd);
+            x1 = width/2 + cosVal * val/2;
+            y1 = height/2 + sinVal * val/2;
+            x2 = width/2 - cosVal * val/2;
+            y2 = height/2 - sinVal * val/2;
+            x3 = width/2 + cosVal * val/2;
+            y3 = height/2 - sinVal * val/2;
+            x4 = width/2 - cosVal * val/2;
+            y4 = height/2 + sinVal * val/2;
             
-            xEnd = xBegin - cosVal * val/2;
-            yEnd = yBegin + sinVal * val/2;
-            CGContextMoveToPoint(currentContext, xBegin, yBegin);
-            CGContextAddLineToPoint(currentContext, xEnd, yEnd);
-            
-            xEnd = xBegin - cosVal * val/2;
-            yEnd = yBegin - sinVal * val/2;
-            CGContextMoveToPoint(currentContext, xBegin, yBegin);
-            CGContextAddLineToPoint(currentContext, xEnd, yEnd);
-            
-            xEnd = xBegin + cosVal * val/2;
-            yEnd = yBegin - sinVal * val/2;
-            CGContextMoveToPoint(currentContext, xBegin, yBegin);
-            CGContextAddLineToPoint(currentContext, xEnd, yEnd);
-            
+            CGContextMoveToPoint(currentContext, x1, y1);
+            CGContextAddLineToPoint(currentContext, x2, y2);
+            CGContextMoveToPoint(currentContext, x3, y3);
+            CGContextAddLineToPoint(currentContext, x4, y4);
+
             CGContextStrokePath(currentContext);
         }
         
