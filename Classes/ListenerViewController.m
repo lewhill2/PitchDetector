@@ -15,7 +15,7 @@
 @implementation ListenerViewController
 
 @synthesize currentPitchLabel, currentBandsLabel, listenButton, pitchKey, prevChar, isListening, rioRef;
-@synthesize currentFrequency, imageView,drawMode, colorStepper, scaleSlider, textureLengthSlider, logLinMode, accelerometer, controlPanelView;
+@synthesize currentFrequency, imageView, drawModeControl, colorModeControl, scaleSlider, textureLengthSlider, logLinModeControl, accelerometer, controlPanelView;
 
 #pragma mark -
 #pragma mark Listener Controls
@@ -57,9 +57,12 @@
     scale = 8.0;
     scaleSlider.value = 8.0;
     
-    colorMode = DRAW_WHITE;
-    waveDrawMode = WAVE_FLOWER;
-    drawMode.selectedSegmentIndex = 2;
+    // init color and draw mode selector
+    colorModeControl.selectedSegmentIndex = HSV_COLOR;
+    colorMode = HSV_COLOR;
+    drawModeControl.selectedSegmentIndex = WAVE_LINE;
+    waveDrawMode = WAVE_LINE;
+    
     yAxisScale = WAVE_LINEAR_SCALE;
     
     
@@ -101,7 +104,7 @@
     controlPanelView.hidden = !controlPanelView.hidden;
 }
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-
+    
     accel[0] = acceleration.x;
     accel[1] = acceleration.y;
     accel[2] = acceleration.z;
@@ -130,7 +133,7 @@
 // This method gets called by the rendering function. Update the UI with
 // the character type and store it in our string.
 - (void)frequencyChangedWithValue:(float)newFrequency{
-
+    
 	self.currentFrequency = newFrequency;
     
     pitchUpdateCount++;
@@ -175,7 +178,7 @@
     {
         float maxValItr = 0.0;
         int maxBandItr = 0;
-
+        
         for ( int i = 0; i < n; i+=2 )
         {
             if(currentBands[currentFrame][i/2] > maxValItr )
@@ -186,10 +189,10 @@
             self->maxBand = maxBandItr;
             self->maxPeak = maxValItr;
         }
-
+        
         [self performSelectorInBackground:@selector(updateBandsLabel) withObject:nil];
     }
-
+    
     // draw the image every other frame
     if( currentFrame % 2 == 0) // compute max val and image infrequently
     {
@@ -201,49 +204,64 @@
 -(void) colorImageRow:(int)row
 {
     assert(row < 1024);
-
+    
+    const CGFloat* colors;
+    float value;
+    
+    
     for(int i = 0; i < 1024; i++) // across the columns.
     {
-        float value = scale * log2(currentBands[row][i]);
+        value = scale * currentBands[row][i];
         
         // determine color for drawing mode
-        if( colorMode == DRAW_WHITE )
+        if( colorMode == HSV_COLOR )
         {
-            [self getPointColor:pointColor forValue:value];
-            
-            outputData[row][i][0] = (Byte) pointColor[0]*255;
-            outputData[row][i][1] = (Byte) pointColor[1]*255;
-            outputData[row][i][2] = (Byte) pointColor[2]*255;
+            [self getPointColor:pointColor forValue:value*scale];
+            outputData[row][i][0] = (int) (pointColor[0]*255.0);
+            outputData[row][i][1] = (int) (pointColor[1]*255.0);
+            outputData[row][i][2] = (int) (pointColor[2]*255.0);
             outputData[row][i][3] = 0xFF;
-
+        }
+        else if( colorMode == DISCRETE_SCALE )
+        {
+            [self getPointColorDiscrete:pointColor forValue:value*scale];
+            outputData[row][i][0] = (int) (pointColor[0]*255.0);
+            outputData[row][i][1] = (int) (pointColor[1]*255.0);
+            outputData[row][i][2] = (int) (pointColor[2]*255.0);
+            outputData[row][i][3] = 0xFF;
+        }
+        else if( colorMode == GREY_SCALE )
+        {
+            outputData[row][i][0] = (int) (scale * value * 255.0);
+            outputData[row][i][1] = (int) (scale * value * 255.0);
+            outputData[row][i][2] = (int) (scale * value * 255.0);
+            outputData[row][i][3] = 0xFF;
+            
         }
         else if( colorMode == PEAK_HIGHLIGHT )
         {
-            ;
-            const CGFloat* colors =
-                CGColorGetComponents([UIColor colorWithHue:(value + 0.5)
-                                               saturation:1.0
-                                               brightness:1.0
-                                                    alpha:1.0].CGColor );
+            colors = CGColorGetComponents([UIColor colorWithHue:value*scale
+                                                     saturation:1.0
+                                                     brightness:1.0
+                                                          alpha:1.0].CGColor );
             
-            outputData[row][i][0] = (Byte) colors[0] * 255;
-            outputData[row][i][1] = (Byte) colors[1] * 255;
-            outputData[row][i][2] = (Byte) colors[2] * 255;
+            outputData[row][i][0] = (int) ((1.0 - colors[0]) * 255.0);
+            outputData[row][i][1] = (int) ((1.0 - colors[1]) * 255.0);
+            outputData[row][i][2] = (int) ((1.0 - colors[2]) * 255.0);
             outputData[row][i][3] = 0xFF;
         }
         else if( colorMode == CHROMATIC_SCALE )
         {
             
-            const CGFloat* colors =
-            CGColorGetComponents([UIColor colorWithHue:((float)i)/1024.0
-                                            saturation:value
-                                             brightness:1.0
-                                                  alpha:1.0].CGColor );
-            outputData[row][i][0] = (Byte) colors[0] * 255;
-            outputData[row][i][1] = (Byte) colors[1] * 255;
-            outputData[row][i][2] = (Byte) colors[2] * 255;
+            colors = CGColorGetComponents([UIColor colorWithHue:((float)i)/1024.0
+                                                     saturation:value*scale
+                                                     brightness:1.0
+                                                          alpha:1.0].CGColor );
+            outputData[row][i][0] = (int) (colors[0] * 255.0);
+            outputData[row][i][1] = (int) (colors[1] * 255.0);
+            outputData[row][i][2] = (int) (colors[2] * 255.0);
             outputData[row][i][3] = 0xFF;
-
+            
         }
     }
 }
@@ -277,7 +295,7 @@
         CGRect ellipseRect = CGRectMake(touchPoints[i].x, touchPoints[i].y, 40, 40);
         CGContextFillEllipseInRect(currentContext, ellipseRect);
     }
-
+    
     // calculate midpoint of touches
     float xSum = 0;
     float ySum = 0;
@@ -302,7 +320,7 @@
         CGContextStrokePath(currentContext);
     }
     
-    // flip the image 
+    // flip the image
     CGAffineTransform flipVertical =
     CGAffineTransformMake(1, 0, 0, -1, 0, imageView.image.size.height);
     CGContextConcatCTM(currentContext, flipVertical);
@@ -315,43 +333,53 @@
         
         float width_convert = width / 1024;
         float val = 0.0;
-
+        
         for(int i = 0; i < 1024; i++)
         {
             CGContextBeginPath(currentContext);
             
             // determine color for drawing mode
-            if( colorMode == DRAW_WHITE )
+            if( colorMode == HSV_COLOR )
             {
                 [self getPointColor:pointColor forValue:currentBands[currentFrame][i]];
-                
                 CGContextSetRGBStrokeColor(currentContext, pointColor[0],
                                            pointColor[1], pointColor[2], pointColor[3]);
+            }
+            else if( colorMode == DISCRETE_SCALE )
+            {
+                [self getPointColorDiscrete:pointColor forValue:currentBands[currentFrame][i]];
+                CGContextSetRGBStrokeColor(currentContext, pointColor[0],
+                                           pointColor[1], pointColor[2], pointColor[3]);
+            }
+            else if( colorMode == GREY_SCALE )
+            {
+                float val = scale * currentBands[currentFrame][i] * 255.0;
+                CGContextSetRGBStrokeColor(currentContext, val, val, val, 1.0);
             }
             else if( colorMode == PEAK_HIGHLIGHT )
             {
                 CGContextSetStrokeColorWithColor(
-                     currentContext,
-                     [UIColor colorWithHue:currentBands[currentFrame][i]/(maxPeak + 0.5)
-                                saturation:1.0
-                                brightness:1.0
-                                     alpha:1.0].CGColor);
+                                                 currentContext,
+                                                 [UIColor colorWithHue:currentBands[currentFrame][i]/(maxPeak + 0.5)
+                                                            saturation:1.0
+                                                            brightness:1.0
+                                                                 alpha:1.0].CGColor);
             }
             else if( colorMode == CHROMATIC_SCALE )
             {
                 CGContextSetStrokeColorWithColor(
-                     currentContext,
-                     [UIColor colorWithHue:((float)i)/1024.0
-                                saturation:1.0
-                                brightness:1.0
-                                     alpha:1.0].CGColor);
+                                                 currentContext,
+                                                 [UIColor colorWithHue:((float)i)/1024.0
+                                                            saturation:1.0
+                                                            brightness:1.0
+                                                                 alpha:1.0].CGColor);
             }
             
             if(yAxisScale == WAVE_LOG_SCALE)
                 val = scale * log2(currentBands[currentFrame][i]);
             else if(yAxisScale == WAVE_LINEAR_SCALE)
                 val = scale * currentBands[currentFrame][i];
-
+            
             float xPos = i * width_convert;
             
             // draw this line segment
@@ -369,16 +397,25 @@
         float val = 0.0;
         float xBegin = width/2;
         float yBegin = height/2;
-
+        
         for(int i = 0; i < 1024; i++)
         {
             CGContextBeginPath(currentContext);
             
             // determine color for drawing mode
-            if( colorMode == DRAW_WHITE )
+            if( colorMode == HSV_COLOR )
             {
                 [self getPointColor:pointColor forValue:currentBands[currentFrame][i]];
-                
+                CGContextSetRGBStrokeColor(currentContext, pointColor[0],pointColor[1], pointColor[2], pointColor[3]);
+            }
+            else if( colorMode == GREY_SCALE )
+            {
+                float val = scale * currentBands[currentFrame][i] * 255.0;
+                CGContextSetRGBStrokeColor(currentContext, val, val, val, 1.0);
+            }
+            else if( colorMode == DISCRETE_SCALE )
+            {
+                [self getPointColorDiscrete:pointColor forValue:currentBands[currentFrame][i]];
                 CGContextSetRGBStrokeColor(currentContext, pointColor[0],pointColor[1], pointColor[2], pointColor[3]);
             }
             else if( colorMode == PEAK_HIGHLIGHT )
@@ -410,22 +447,22 @@
             float yEnd = yBegin + sinVal * val/2;
             CGContextMoveToPoint(currentContext, xBegin, yBegin);
             CGContextAddLineToPoint(currentContext, xEnd, yEnd);
-
+            
             xEnd = xBegin - cosVal * val/2;
             yEnd = yBegin + sinVal * val/2;
             CGContextMoveToPoint(currentContext, xBegin, yBegin);
             CGContextAddLineToPoint(currentContext, xEnd, yEnd);
-
+            
             xEnd = xBegin - cosVal * val/2;
             yEnd = yBegin - sinVal * val/2;
             CGContextMoveToPoint(currentContext, xBegin, yBegin);
             CGContextAddLineToPoint(currentContext, xEnd, yEnd);
-
+            
             xEnd = xBegin + cosVal * val/2;
             yEnd = yBegin - sinVal * val/2;
             CGContextMoveToPoint(currentContext, xBegin, yBegin);
             CGContextAddLineToPoint(currentContext, xEnd, yEnd);
-
+            
             CGContextStrokePath(currentContext);
         }
         
@@ -462,24 +499,36 @@
         [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
         
     }
-
+    
     if(waveDrawMode == WAVE_BLOCKS)
     {
         
-        if(self->waveDrawMode == WAVE_BLOCKS)
-        {
-            for(int i = lastFrame; i <= currentFrame; i++)
-            {
-                [self colorImageRow:i];
-                if (i > textureHeight)
-                    i =  i % textureHeight;
-            }
-            lastFrame = currentFrame;
-        }
+        [self colorImageRow:currentFrame];
         
         const int w = 32;
         const int h = 32;
+        
+        CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
+        CGContextRef bitmapContext=CGBitmapContextCreate(outputData[currentFrame], w, h, 8, 4*w, colorSpace,  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
+        CFRelease(colorSpace);
+        CGImageRef cgImage=CGBitmapContextCreateImage(bitmapContext);
+        CGContextRelease(bitmapContext);
+        
+        UIImage * newImage = [UIImage imageWithCGImage:cgImage];
+        CGImageRelease(cgImage);
+        
+        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
+        
+    }
 
+    if(waveDrawMode == WAVE_WALL)
+    {
+        
+        [self colorImageRow:currentFrame];
+        
+        const int w = 1;
+        const int h = 1024;
+        
         CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
         CGContextRef bitmapContext=CGBitmapContextCreate(outputData[currentFrame], w, h, 8, 4*w, colorSpace,  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
         CFRelease(colorSpace);
@@ -493,11 +542,14 @@
         
     }
     
+    
+    
+    
     UIGraphicsEndImageContext(); // Add this line.
 }
 
--(void) getPointColor:(CGFloat*)out_color
-             forValue:(float)voltage
+-(void) getPointColorDiscrete:(CGFloat*)out_color
+                     forValue:(float)voltage
 {
     
     if(voltage > 150)
@@ -530,7 +582,93 @@
     }
 }
 
--(IBAction)sliderValueChanged:(UISlider *)sender
+-(void) getPointColor:(CGFloat*)out_color
+             forValue:(float)voltage
+{
+    HSV value;
+    value.h = voltage;
+    value.s = 1.0;
+    value.v = 1.0;
+    
+    RGBA rgba = [self RGBfromHSV:value];
+    
+    out_color[0] = rgba.r;
+    out_color[1] = rgba.g;
+    out_color[2] = rgba.b;
+}
+
+- (RGBA)RGBfromHSV:(HSV)value
+{
+    double      hh, p, q, t, ff;
+    long        i;
+    RGBA        out;
+    out.a       = 1;
+    
+    if (value.s <= 0.0) // < is bogus, just shuts up warnings
+    {
+        if (isnan(value.h)) // value.h == NAN
+        {
+            out.r = value.v;
+            out.g = value.v;
+            out.b = value.v;
+            return out;
+        }
+        
+        // error - should never happen
+        out.r = 0.0;
+        out.g = 0.0;
+        out.b = 0.0;
+        return out;
+    }
+    
+    hh = value.h;
+    if(hh >= 360.0) hh = 0.0;
+    hh /= 60.0;
+    i = (long)hh;
+    ff = hh - i;
+    p = value.v * (1.0 - value.s);
+    q = value.v * (1.0 - (value.s * ff));
+    t = value.v * (1.0 - (value.s * (1.0 - ff)));
+    
+    switch(i)
+    {
+        case 0:
+            out.r = value.v;
+            out.g = t;
+            out.b = p;
+            break;
+        case 1:
+            out.r = q;
+            out.g = value.v;
+            out.b = p;
+            break;
+        case 2:
+            out.r = p;
+            out.g = value.v;
+            out.b = t;
+            break;
+            
+        case 3:
+            out.r = p;
+            out.g = q;
+            out.b = value.v;
+            break;
+        case 4:
+            out.r = t;
+            out.g = p;
+            out.b = value.v;
+            break;
+        case 5:
+        default:
+            out.r = value.v;
+            out.g = p;
+            out.b = q;
+            break;
+    }
+    return out;
+}
+
+-(IBAction)scaleValueChanged:(UISlider *)sender
 {
     scale = sender.value;
     [self.currentBandsLabel performSelectorOnMainThread:@selector(setText:)
@@ -550,20 +688,22 @@
 
 - (IBAction)drawModeChangedAction:(id)sender
 {
-    if (drawMode.selectedSegmentIndex == 0)
+    if (drawModeControl.selectedSegmentIndex == 0)
         waveDrawMode = WAVE_LINE;
-    else if (drawMode.selectedSegmentIndex == 1)
+    else if (drawModeControl.selectedSegmentIndex == 1)
         waveDrawMode = WAVE_TEXTURE;
-    else if (drawMode.selectedSegmentIndex == 2)
+    else if (drawModeControl.selectedSegmentIndex == 2)
         waveDrawMode = WAVE_FLOWER;
-    else if (drawMode.selectedSegmentIndex == 3)
+    else if (drawModeControl.selectedSegmentIndex == 3)
         waveDrawMode = WAVE_BLOCKS;
-
+    else if (drawModeControl.selectedSegmentIndex == 4)
+        waveDrawMode = WAVE_WALL;
+    
 }
 
--(IBAction)logLinModeChangedAction:(id)sender
+-(IBAction)logLinModeControlChangedAction:(id)sender
 {
-    if (logLinMode.selectedSegmentIndex == 0)
+    if (logLinModeControl.selectedSegmentIndex == 0)
         yAxisScale = WAVE_LINEAR_SCALE;
     else
         yAxisScale = WAVE_LOG_SCALE;
@@ -572,12 +712,21 @@
 
 -(IBAction)colorModeChangedAction:(id)sender
 {
-    if(colorStepper.value == 0)
+    if(colorModeControl.selectedSegmentIndex == 0)
         colorMode = PEAK_HIGHLIGHT;
-    else if(colorStepper.value == 1)
+    
+    else if(colorModeControl.selectedSegmentIndex == 1)
         colorMode = CHROMATIC_SCALE;
-    else if(colorStepper.value == 2)
-        colorMode = DRAW_WHITE;
+    
+    else if(colorModeControl.selectedSegmentIndex == 2)
+        colorMode = HSV_COLOR;
+    
+    else if(colorModeControl.selectedSegmentIndex == 3)
+        colorMode = DISCRETE_SCALE;
+    
+    else if(colorModeControl.selectedSegmentIndex == 4)
+        colorMode = GREY_SCALE;
+
 }
 
 -(void) printTouches
@@ -608,7 +757,7 @@
         count++;
     }
     touchCount = [touches count];
-
+    
 }
 
 - (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event

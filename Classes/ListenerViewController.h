@@ -13,14 +13,17 @@
 typedef enum {
     PEAK_HIGHLIGHT = 0,
     CHROMATIC_SCALE = 1,
-    DRAW_WHITE = 2
+    HSV_COLOR = 2,
+    DISCRETE_SCALE = 3,
+    GREY_SCALE = 4
 } ColorMode;
 
 typedef enum {
     WAVE_LINE = 0,
     WAVE_TEXTURE = 1,
     WAVE_FLOWER = 2,
-    WAVE_BLOCKS = 3
+    WAVE_BLOCKS = 3,
+    WAVE_WALL = 4
 } WaveDrawMode;
 
 
@@ -28,6 +31,22 @@ typedef enum {
     WAVE_LINEAR_SCALE = 0,
     WAVE_LOG_SCALE = 1
 } WaveAxisScale;
+
+
+typedef struct
+{
+    double r;       // percent [0 - 1]
+    double g;       // percent [0 - 1]
+    double b;       // percent [0 - 1]
+    double a;       // percent [0 - 1]
+} RGBA;
+
+typedef struct
+{
+    double h;       // angle in degrees [0 - 360]
+    double s;       // percent [0 - 1]
+    double v;       // percent [0 - 1]
+} HSV;
 
 @interface ListenerViewController : UIViewController  <UIAccelerometerDelegate> {
     
@@ -74,9 +93,9 @@ typedef enum {
 @property(nonatomic, retain) IBOutlet UIButton *listenButton;
 @property(nonatomic, retain) IBOutlet UISlider *scaleSlider;
 @property(nonatomic, retain) IBOutlet UISlider *textureLengthSlider;
-@property(nonatomic, retain) IBOutlet UIStepper *colorStepper;
-@property(nonatomic, retain) IBOutlet UISegmentedControl *drawMode;
-@property(nonatomic, retain) IBOutlet UISegmentedControl *logLinMode;
+@property(nonatomic, retain) IBOutlet UISegmentedControl *drawModeControl;
+@property(nonatomic, retain) IBOutlet UISegmentedControl *logLinModeControl;
+@property(nonatomic, retain) IBOutlet UISegmentedControl *colorModeControl;
 
 @property(nonatomic, retain) NSMutableString *pitchKey;
 @property(nonatomic, retain) NSString *prevChar;
@@ -93,10 +112,10 @@ typedef enum {
 - (IBAction)toggleListening:(id)sender;
 - (void)startListener;
 - (void)stopListener;
--(IBAction)sliderValueChanged:(UISlider *)sender;
+-(IBAction)scaleValueChanged:(UISlider *)sender;
 -(IBAction)textureLengthValueChanged:(UISlider *)sender;
 -(IBAction)drawModeChangedAction:(id)sender;
--(IBAction)logLinModeChangedAction:(id)sender;
+-(IBAction)logLinModeControlChangedAction:(id)sender;
 -(IBAction)colorModeChangedAction:(id)sender;
 -(void) handleSingleTap:(UITapGestureRecognizer *)gr;
 
@@ -104,9 +123,14 @@ typedef enum {
 - (void)bandsChangedWithValue:(float*)newBands numBands:(int)n;
 - (void)updateFrequencyLabel;
 - (void)drawRect;
+
 - (void)getPointColor:(CGFloat*)out_color
              forValue:(float)voltage;
+-(void) getPointColorDiscrete:(CGFloat*)out_color
+                    forValue:(float)voltage;
+
 
 -(void) colorImageRow:(int)row;
+
 
 @end

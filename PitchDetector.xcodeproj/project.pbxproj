@@ -130,8 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				E4BC0B461770FA600065E21B /* libz.dylib */,
-				E4BC0B441770FA510065E21B /* SystemConfiguration.framework */,
-				E4BC0B421770FA480065E21B /* CoreTelephony.framework */,
 				E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */,
 				E46A5957161A321400467198 /* Default@2x.png */,
 				E46A5955161A320800467198 /* Default.png */,
@@ -174,6 +172,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4BC0B441770FA510065E21B /* SystemConfiguration.framework */,
+				E4BC0B421770FA480065E21B /* CoreTelephony.framework */,
 				E4BC0B401770FA110065E21B /* NewRelicAgent.framework */,
 				E475D4A5176F814400F6487A /* Crashlytics.framework */,
 				A014E9FC1292513100F7F2AB /* Accelerate.framework */,
@@ -256,6 +256,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0450;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = 57N59Y4UDW;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "PitchDetector" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -335,7 +340,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lew Hill (J7C6HZHGGQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -348,7 +354,7 @@
 				INFOPLIST_FILE = "PitchDetector-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = PitchDetector;
-				PROVISIONING_PROFILE = "18A82318-4C72-45E5-8C68-321A73A109D2";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -357,7 +363,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Lew Hill (J7C6HZHGGQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -368,7 +375,7 @@
 				INFOPLIST_FILE = "PitchDetector-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = PitchDetector;
-				PROVISIONING_PROFILE = "18A82318-4C72-45E5-8C68-321A73A109D2";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
