@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ScreenCaptureView.h"
 
 @class RIOInterface;
 
@@ -91,6 +92,10 @@ typedef struct
 @property(nonatomic, retain) IBOutlet UILabel *currentPitchLabel;
 @property(nonatomic, retain) IBOutlet UILabel *currentBandsLabel;
 @property(nonatomic, retain) IBOutlet UIButton *listenButton;
+
+@property(nonatomic, retain) IBOutlet UIButton *recordButton;
+@property(nonatomic, retain) IBOutlet UIButton *stopButton;
+
 @property(nonatomic, retain) IBOutlet UISlider *scaleSlider;
 @property(nonatomic, retain) IBOutlet UISlider *textureLengthSlider;
 @property(nonatomic, retain) IBOutlet UISegmentedControl *drawModeControl;
@@ -106,10 +111,11 @@ typedef struct
 
 @property (nonatomic, retain) UIAccelerometer *accelerometer;
 
-
+@property (nonatomic, retain) IBOutlet ScreenCaptureView *screenCaptureView;
 
 #pragma mark Listener Controls
 - (IBAction)toggleListening:(id)sender;
+
 - (void)startListener;
 - (void)stopListener;
 -(IBAction)scaleValueChanged:(UISlider *)sender;
@@ -131,6 +137,12 @@ typedef struct
 
 
 -(void) colorImageRow:(int)row;
+
+// screen recording
+-(IBAction)startRecording:(id)sender;
+-(IBAction)stopRecording:(id)sender;
+
+
 
 
 @end

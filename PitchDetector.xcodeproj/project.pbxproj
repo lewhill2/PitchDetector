@@ -24,6 +24,11 @@
 		A061FB2312765E99002625EB /* Sound_Wave_Listen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A061FB2212765E99002625EB /* Sound_Wave_Listen.jpg */; };
 		A0C953EF1277C94300BF51F0 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C953EE1277C94300BF51F0 /* CAXException.cpp */; };
 		C950950E126E71140033980B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C950950D126E71140033980B /* AudioToolbox.framework */; };
+		E42CEE64182199CD005F81CB /* ScreenCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = E42CEE63182199CD005F81CB /* ScreenCaptureView.m */; };
+		E42CEE6618219ADD005F81CB /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42CEE6518219ADD005F81CB /* AssetsLibrary.framework */; };
+		E42CEE6818219AFD005F81CB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42CEE6718219AFD005F81CB /* CoreMedia.framework */; };
+		E42CEE6A18219B08005F81CB /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42CEE6918219B07005F81CB /* CoreVideo.framework */; };
+		E42CEE6C18219B11005F81CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42CEE6B18219B11005F81CB /* QuartzCore.framework */; };
 		E46366F61613940600AFF701 /* ColorLogo-95.png in Resources */ = {isa = PBXBuildFile; fileRef = E46366F51613940600AFF701 /* ColorLogo-95.png */; };
 		E46A5952161A2BC700467198 /* pitchicon_114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5951161A2BC700467198 /* pitchicon_114x114.png */; };
 		E46A5954161A319500467198 /* pitch_detector_57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5953161A319500467198 /* pitch_detector_57x57.png */; };
@@ -68,6 +73,12 @@
 		A0C953DD1277C8BA00BF51F0 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		A0C953EE1277C94300BF51F0 /* CAXException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAXException.cpp; sourceTree = "<group>"; };
 		C950950D126E71140033980B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E42CEE62182199CD005F81CB /* ScreenCaptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenCaptureView.h; sourceTree = "<group>"; };
+		E42CEE63182199CD005F81CB /* ScreenCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenCaptureView.m; sourceTree = "<group>"; };
+		E42CEE6518219ADD005F81CB /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		E42CEE6718219AFD005F81CB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		E42CEE6918219B07005F81CB /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		E42CEE6B18219B11005F81CB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E46366F51613940600AFF701 /* ColorLogo-95.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ColorLogo-95.png"; sourceTree = "<group>"; };
 		E46A5951161A2BC700467198 /* pitchicon_114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pitchicon_114x114.png; sourceTree = "<group>"; };
 		E46A5953161A319500467198 /* pitch_detector_57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pitch_detector_57x57.png; sourceTree = "<group>"; };
@@ -89,6 +100,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E42CEE6C18219B11005F81CB /* QuartzCore.framework in Frameworks */,
+				E42CEE6A18219B08005F81CB /* CoreVideo.framework in Frameworks */,
+				E42CEE6818219AFD005F81CB /* CoreMedia.framework in Frameworks */,
+				E42CEE6618219ADD005F81CB /* AssetsLibrary.framework in Frameworks */,
 				E4BC0B471770FA600065E21B /* libz.dylib in Frameworks */,
 				E4BC0B451770FA510065E21B /* SystemConfiguration.framework in Frameworks */,
 				E4BC0B431770FA480065E21B /* CoreTelephony.framework in Frameworks */,
@@ -172,6 +187,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E42CEE6B18219B11005F81CB /* QuartzCore.framework */,
+				E42CEE6918219B07005F81CB /* CoreVideo.framework */,
+				E42CEE6718219AFD005F81CB /* CoreMedia.framework */,
+				E42CEE6518219ADD005F81CB /* AssetsLibrary.framework */,
 				E4BC0B441770FA510065E21B /* SystemConfiguration.framework */,
 				E4BC0B421770FA480065E21B /* CoreTelephony.framework */,
 				E4BC0B401770FA110065E21B /* NewRelicAgent.framework */,
@@ -205,6 +224,8 @@
 				A061FB04127643D3002625EB /* ListenerViewController.h */,
 				A061FB05127643D3002625EB /* ListenerViewController.m */,
 				A061FB06127643D3002625EB /* ListenerViewController.xib */,
+				E42CEE62182199CD005F81CB /* ScreenCaptureView.h */,
+				E42CEE63182199CD005F81CB /* ScreenCaptureView.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -328,6 +349,7 @@
 				1D3623260D0F684500981E51 /* SafeSoundAppDelegate.m in Sources */,
 				A04F83CB127292D500B590A1 /* RIOInterface.mm in Sources */,
 				A04F841D1272996900B590A1 /* KeyHelper.m in Sources */,
+				E42CEE64182199CD005F81CB /* ScreenCaptureView.m in Sources */,
 				A061FB07127643D3002625EB /* ListenerViewController.m in Sources */,
 				A0C953EF1277C94300BF51F0 /* CAXException.cpp in Sources */,
 			);

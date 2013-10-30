@@ -15,7 +15,7 @@
 @implementation ListenerViewController
 
 @synthesize currentPitchLabel, currentBandsLabel, listenButton, pitchKey, prevChar, isListening, rioRef;
-@synthesize currentFrequency, imageView, drawModeControl, colorModeControl, scaleSlider, textureLengthSlider, logLinModeControl, accelerometer, controlPanelView;
+@synthesize currentFrequency, imageView, drawModeControl, colorModeControl, scaleSlider, textureLengthSlider, logLinModeControl, accelerometer, controlPanelView, screenCaptureView;
 
 #pragma mark -
 #pragma mark Listener Controls
@@ -39,6 +39,15 @@
 	[rioRef stopListening];
 }
 
+-(IBAction)startRecording:(id)sender
+{
+    [screenCaptureView startRecording];
+}
+
+-(IBAction)stopRecording:(id)sender
+{
+    [screenCaptureView stopRecording];
+}
 
 
 
