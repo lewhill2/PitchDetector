@@ -30,7 +30,8 @@ typedef enum {
 
 typedef enum {
     WAVE_LINEAR_SCALE = 0,
-    WAVE_LOG_SCALE = 1
+    WAVE_LOG_SCALE = 1,
+    WAVE_SQUARED_SCALE = 2,
 } WaveAxisScale;
 
 
@@ -64,7 +65,7 @@ typedef struct
     int maxBand;
 	NSString *prevChar;
     float scale;
-    int paramAdjust;
+    float paramAdjust;
     int pitchUpdateCount;
     
     float cosLookup[1024];

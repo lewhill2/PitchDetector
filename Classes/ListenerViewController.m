@@ -68,11 +68,11 @@
     
     paramAdjust = 0.5;
     paramSlider.value = paramAdjust;
-
+    fftView.param = paramAdjust;
     
     // init color and draw mode selector
-    colorModeControl.selectedSegmentIndex = HSV_COLOR;
-    colorMode = HSV_COLOR;
+    colorModeControl.selectedSegmentIndex = PEAK_HIGHLIGHT;
+    colorMode = PEAK_HIGHLIGHT;
     drawModeControl.selectedSegmentIndex = WAVE_LINE;
     waveDrawMode = WAVE_LINE;
     
@@ -103,6 +103,8 @@
     
     // add tap gesture
     fftView.userInteractionEnabled = true;
+    [fftView setupFilter];
+    
     controlPanelView.hidden = false;
     
     UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
@@ -142,12 +144,18 @@
 
 - (void)drawRect
 {
-    UIGraphicsBeginImageContext(fftView.frame.size);
+    // render this image to a 160x160 quad
+    float width = 256;
+    float height = 256;
+    CGSize renderSize = CGSizeMake(width,height);
+    CGRect renderRect = CGRectMake(0,0,width,height);
+    
+    UIGraphicsBeginImageContext(renderSize);
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     
     // fill the background of the square with grey
     CGContextSetRGBFillColor(currentContext, accel[0], accel[1], accel[2],1.0);
-    CGContextFillRect(currentContext, fftView.frame);
+    CGContextFillRect(currentContext, renderRect);
     
     //  draw multi touches
     CGContextSetRGBFillColor(currentContext, 255, 0, 255, 0.9);
@@ -186,11 +194,9 @@
     
     // flip the image
     CGAffineTransform flipVertical =
-    CGAffineTransformMake(1, 0, 0, -1, 0, fftView.frame.size.height);
+    CGAffineTransformMake(1, 0, 0, -1, 0, height);
     CGContextConcatCTM(currentContext, flipVertical);
     
-    float width = fftView.frame.size.width;
-    float height = fftView.frame.size.height;
     
     if( waveDrawMode == WAVE_LINE )
     {
@@ -241,6 +247,8 @@
                 val = scale * 100 * log2(currentBands[currentFrame][i]);
             else if(yAxisScale == WAVE_LINEAR_SCALE)
                 val = scale * 10 * currentBands[currentFrame][i];
+            else if(yAxisScale == WAVE_SQUARED_SCALE)
+                val = scale * 10 * currentBands[currentFrame][i] * currentBands[currentFrame][i];
             
             float xPos = i * width_convert;
             
@@ -251,7 +259,7 @@
         }
         
         UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-        fftView.imageView.image = newImage;
+        [fftView setImage:newImage];
     }
     
     if( waveDrawMode == WAVE_FLOWER)
@@ -303,6 +311,8 @@
                 val = scale * 100 * log2(currentBands[currentFrame][i]);
             else if(yAxisScale == WAVE_LINEAR_SCALE)
                 val = scale * 10 * currentBands[currentFrame][i];
+            else if(yAxisScale == WAVE_SQUARED_SCALE)
+                val = scale * 10 * currentBands[currentFrame][i] * currentBands[currentFrame][i];
             
             cosVal = cosLookup[i] * val;
             sinVal = sinLookup[i] * val;
@@ -329,7 +339,7 @@
         
         // save image
         UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-        fftView.imageView.image = newImage;
+        [fftView setImage:newImage];
         
     }
     
@@ -340,7 +350,6 @@
         {
             while (lastFrame != currentFrame)
             {
-//                NSLog(@"lastFrame = %i", lastFrame);
                 [self colorImageRow:lastFrame];
 
                 lastFrame++;
@@ -355,7 +364,7 @@
         CGContextRelease(bitmapContext);
         
         UIImage * newImage = [UIImage imageWithCGImage:cgImage];
-        fftView.imageView.image = newImage;
+        [fftView setImage:newImage];
         CGImageRelease(cgImage);
         
     }
@@ -373,7 +382,7 @@
         CGContextRelease(bitmapContext);
         
         UIImage * newImage = [UIImage imageWithCGImage:cgImage];
-        fftView.imageView.image = newImage;
+        [fftView setImage:newImage];
 
         CGImageRelease(cgImage);
         
@@ -392,7 +401,7 @@
         CGContextRelease(bitmapContext);
         
         UIImage * newImage = [UIImage imageWithCGImage:cgImage];
-        fftView.imageView.image = newImage;
+        [fftView setImage:newImage];
 
         CGImageRelease(cgImage);
     }
@@ -686,9 +695,8 @@ double clamp(double d, double min, double max) {
     paramAdjust = sender.value;
     if(paramAdjust < 0)
         paramAdjust = 4;
-    [self.currentBandsLabel performSelectorOnMainThread:@selector(setText:)
-                                             withObject:[NSString stringWithFormat:@"TextureLength = %d", paramAdjust]
-                                          waitUntilDone:NO];
+    self.currentBandsLabel.text = [NSString stringWithFormat:@"TextureLength = %f", paramAdjust];
+    fftView.param = paramAdjust;
 }
 
 - (IBAction)drawModeChangedAction:(id)sender
@@ -710,8 +718,10 @@ double clamp(double d, double min, double max) {
 {
     if (logLinModeControl.selectedSegmentIndex == 0)
         yAxisScale = WAVE_LINEAR_SCALE;
-    else
+    else if (logLinModeControl.selectedSegmentIndex == 1)
         yAxisScale = WAVE_LOG_SCALE;
+    else if (logLinModeControl.selectedSegmentIndex == 2)
+        yAxisScale = WAVE_SQUARED_SCALE;
 }
 
 

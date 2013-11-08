@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nQa-M1-eWW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ColorLogo-95.png" translatesAutoresizingMaskIntoConstraints="NO" id="nQa-M1-eWW">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="569"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -26,14 +26,14 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Peak Pitch:" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="jWn-3a-hTc">
-                                        <rect key="frame" x="49" y="334" width="88" height="21"/>
+                                        <rect key="frame" x="49" y="329" width="88" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="n/a" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="TPW-Ia-1O5">
-                                        <rect key="frame" x="166" y="334" width="83" height="21"/>
+                                        <rect key="frame" x="166" y="329" width="83" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" none="YES" updatesFrequently="YES"/>
@@ -78,7 +78,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="FFT Labels 1 2 3 4" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="02P-gp-PZL">
-                                        <rect key="frame" x="81" y="365" width="159" height="27"/>
+                                        <rect key="frame" x="81" y="360" width="159" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -100,29 +100,30 @@
                                         </connections>
                                     </segmentedControl>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cfG-bf-xqJ">
-                                        <rect key="frame" x="24" y="245" width="273" height="29"/>
+                                        <rect key="frame" x="24" y="240" width="273" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="scaleSliderValueChanged:" destination="AIz-fn-0G3" eventType="valueChanged" id="WPH-L7-sCx"/>
                                         </connections>
                                     </slider>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="bBu-KB-18m">
-                                        <rect key="frame" x="24" y="304" width="273" height="29"/>
+                                        <rect key="frame" x="24" y="299" width="273" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="paramSliderValueChanged:" destination="AIz-fn-0G3" eventType="valueChanged" id="Ohz-gn-SUb"/>
                                         </connections>
                                     </slider>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="qj1-R1-3uq">
-                                        <rect key="frame" x="87" y="176" width="147" height="29"/>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="F3G-qq-EMf">
+                                        <rect key="frame" x="67" y="166" width="187" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <segments>
                                             <segment title="Lin"/>
                                             <segment title="Log"/>
+                                            <segment title="X^2"/>
                                         </segments>
                                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <action selector="logLinModeControlChangedAction:" destination="AIz-fn-0G3" eventType="valueChanged" id="6EK-2U-PRj"/>
+                                            <action selector="logLinModeControlChangedAction:" destination="AIz-fn-0G3" eventType="valueChanged" id="9lM-XG-CA9"/>
                                         </connections>
                                     </segmentedControl>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gys-bi-Zf1">
@@ -141,14 +142,14 @@
                                         </connections>
                                     </segmentedControl>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Data Scale" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ts-MG-fSc">
-                                        <rect key="frame" x="26" y="221" width="84" height="21"/>
+                                        <rect key="frame" x="26" y="216" width="84" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Parameter Adjust" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9c-IL-r0R">
-                                        <rect key="frame" x="26" y="281" width="133" height="21"/>
+                                        <rect key="frame" x="26" y="276" width="133" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -180,7 +181,7 @@
                         <outlet property="drawModeControl" destination="9uX-vq-HIA" id="tXO-RG-mcj"/>
                         <outlet property="fftView" destination="b7R-7f-VRQ" id="Hoq-1z-vkF"/>
                         <outlet property="listenButton" destination="yJK-Pb-0ff" id="UHa-yT-c2p"/>
-                        <outlet property="logLinModeControl" destination="qj1-R1-3uq" id="PMx-UQ-2KU"/>
+                        <outlet property="logLinModeControl" destination="F3G-qq-EMf" id="svd-xl-Ejs"/>
                         <outlet property="paramSlider" destination="bBu-KB-18m" id="zhB-c2-ALS"/>
                         <outlet property="recordButton" destination="JCZ-Fi-unE" id="otY-1S-OV2"/>
                         <outlet property="scaleSlider" destination="cfG-bf-xqJ" id="W42-EH-0Ob"/>
@@ -191,6 +192,9 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="ColorLogo-95.png" width="169" height="95"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

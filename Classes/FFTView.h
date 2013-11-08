@@ -13,7 +13,12 @@
 @interface FFTView : ScreenCaptureView
 @property (nonatomic, retain) IBOutlet ListenerViewController *lvc;
 @property (nonatomic, retain) IBOutlet UIImageView *imageView;
+@property float param;
 
-- (void)drawRect:(CGRect)rect;
+-(void)drawRect:(CGRect)rect;
+
+-(void)setImage:(UIImage*)image;
+
+-(void)setupFilter;
 
 @end
