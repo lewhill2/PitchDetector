@@ -9,13 +9,14 @@
 #import "ListenerViewController.h"
 #import "RIOInterface.h"
 #import "KeyHelper.h"
+#import "FFTView.h"
 
 #define IS_IPAD	(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 
 @implementation ListenerViewController
 
 @synthesize currentPitchLabel, currentBandsLabel, listenButton, pitchKey, prevChar, isListening, rioRef;
-@synthesize currentFrequency, imageView, drawModeControl, colorModeControl, scaleSlider, textureLengthSlider, logLinModeControl, accelerometer, controlPanelView, screenCaptureView;
+@synthesize currentFrequency, drawModeControl, colorModeControl, scaleSlider, paramSlider, logLinModeControl, accelerometer, controlPanelView, fftView, colorSpace;
 
 #pragma mark -
 #pragma mark Listener Controls
@@ -41,14 +42,13 @@
 
 -(IBAction)startRecording:(id)sender
 {
-    [screenCaptureView startRecording];
+    [fftView startRecording];
 }
 
 -(IBAction)stopRecording:(id)sender
 {
-    [screenCaptureView stopRecording];
+    [fftView stopRecording];
 }
-
 
 
 #pragma mark -
@@ -63,8 +63,12 @@
     
     currentFrame = 0;
     
-    scale = 8.0;
-    scaleSlider.value = 8.0;
+    scale = 0.5;
+    scaleSlider.value = scale;
+    
+    paramAdjust = 0.5;
+    paramSlider.value = paramAdjust;
+
     
     // init color and draw mode selector
     colorModeControl.selectedSegmentIndex = HSV_COLOR;
@@ -90,8 +94,7 @@
     
     pointColor[0] = pointColor[1] = pointColor[2] = pointColor[3] = 0.0;
     
-    textureHeight = 128;
-    textureLengthSlider.value = 128;
+    colorSpace=CGColorSpaceCreateDeviceRGB();
     
     // init accelerometer
     self.accelerometer = [UIAccelerometer sharedAccelerometer];
@@ -99,21 +102,21 @@
     self.accelerometer.delegate = self;
     
     // add tap gesture
-    imageView.userInteractionEnabled = true;
+    fftView.userInteractionEnabled = true;
     controlPanelView.hidden = false;
     
     UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     singleTap.numberOfTapsRequired = 1;
     singleTap.numberOfTouchesRequired = 1;
-    [imageView addGestureRecognizer: singleTap];
+    [fftView addGestureRecognizer: singleTap];
 }
+
 
 -(void) handleSingleTap:(UITapGestureRecognizer *)gr {
     NSLog(@"handleSingleTap");
     controlPanelView.hidden = !controlPanelView.hidden;
 }
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-    
     accel[0] = acceleration.x;
     accel[1] = acceleration.y;
     accel[2] = acceleration.z;
@@ -137,161 +140,14 @@
 	[super dealloc];
 }
 
-#pragma mark -
-#pragma mark Key Management
-// This method gets called by the rendering function. Update the UI with
-// the character type and store it in our string.
-- (void)frequencyChangedWithValue:(float)newFrequency{
-    
-	self.currentFrequency = newFrequency;
-    
-    pitchUpdateCount++;
-    if (pitchUpdateCount % 16 == 0)
-        [self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
-    
-	/*
-	 * If you want to display letter values for pitches, uncomment this code and
-	 * add your frequency to pitch mappings in KeyHelper.m
-     
-     
-     KeyHelper *helper = [KeyHelper sharedInstance];
-     NSString *closestChar = [helper closestCharForFrequency:newFrequency];
-     
-     // If the new sample has the same frequency as the last one, we should ignore
-     // it. This is a pretty inefficient way of doing comparisons, but it works.
-     if (![prevChar isEqualToString:closestChar]) {
-     self.prevChar = closestChar;
-     if ([closestChar isEqualToString:@"0"]) {
-     //	[self toggleListening:nil];
-     }
-     [self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
-     NSString *appendedString = [key stringByAppendingString:closestChar];
-     self.key = [NSMutableString stringWithString:appendedString];
-     }
-     */
-	
-	
-}
-
-- (void)bandsChangedWithValue:(float*)newBands numBands:(int)n;
-{
-    
-    currentFrame++;
-    currentFrame = (currentFrame % textureHeight);
-    
-    for ( int i = 0; i < n; i+=2 )
-        currentBands[currentFrame][i/2] = newBands[i];
-    
-    // compute/update freq and peak every 16 frames
-    if( currentFrame % 16 == 0) // compute max val infrequently
-    {
-        float maxValItr = 0.0;
-        int maxBandItr = 0;
-        
-        for ( int i = 0; i < n; i+=2 )
-        {
-            if(currentBands[currentFrame][i/2] > maxValItr )
-            {
-                maxValItr = currentBands[currentFrame][i/2];
-                maxBandItr = i;
-            }
-            self->maxBand = maxBandItr;
-            self->maxPeak = maxValItr;
-        }
-        
-        [self performSelectorInBackground:@selector(updateBandsLabel) withObject:nil];
-    }
-    
-    // draw the image every other frame
-    if( currentFrame % 2 == 0) // compute max val and image infrequently
-    {
-        [self performSelectorInBackground:@selector(drawRect) withObject:nil];
-    }
-}
-
-// this fills in the pixels across one row (timepoint) of the data.
--(void) colorImageRow:(int)row
-{
-    assert(row < 1024);
-    
-    const CGFloat* colors;
-    float value;
-    
-    
-    for(int i = 0; i < 1024; i++) // across the columns.
-    {
-        value = scale * currentBands[row][i];
-        
-        // determine color for drawing mode
-        if( colorMode == HSV_COLOR )
-        {
-            [self getPointColor:pointColor forValue:value*scale];
-            outputData[row][i][0] = (int) (pointColor[0]*255.0);
-            outputData[row][i][1] = (int) (pointColor[1]*255.0);
-            outputData[row][i][2] = (int) (pointColor[2]*255.0);
-            outputData[row][i][3] = 0xFF;
-        }
-        else if( colorMode == DISCRETE_SCALE )
-        {
-            [self getPointColorDiscrete:pointColor forValue:value*scale];
-            outputData[row][i][0] = (int) (pointColor[0]*255.0);
-            outputData[row][i][1] = (int) (pointColor[1]*255.0);
-            outputData[row][i][2] = (int) (pointColor[2]*255.0);
-            outputData[row][i][3] = 0xFF;
-        }
-        else if( colorMode == GREY_SCALE )
-        {
-            outputData[row][i][0] = (int) (scale * value * 255.0);
-            outputData[row][i][1] = (int) (scale * value * 255.0);
-            outputData[row][i][2] = (int) (scale * value * 255.0);
-            outputData[row][i][3] = 0xFF;
-            
-        }
-        else if( colorMode == PEAK_HIGHLIGHT )
-        {
-            colors = CGColorGetComponents([UIColor colorWithHue:value*scale
-                                                     saturation:1.0
-                                                     brightness:1.0
-                                                          alpha:1.0].CGColor );
-            
-            outputData[row][i][0] = (int) ((1.0 - colors[0]) * 255.0);
-            outputData[row][i][1] = (int) ((1.0 - colors[1]) * 255.0);
-            outputData[row][i][2] = (int) ((1.0 - colors[2]) * 255.0);
-            outputData[row][i][3] = 0xFF;
-        }
-        else if( colorMode == CHROMATIC_SCALE )
-        {
-            
-            colors = CGColorGetComponents([UIColor colorWithHue:((float)i)/1024.0
-                                                     saturation:value*scale
-                                                     brightness:1.0
-                                                          alpha:1.0].CGColor );
-            outputData[row][i][0] = (int) (colors[0] * 255.0);
-            outputData[row][i][1] = (int) (colors[1] * 255.0);
-            outputData[row][i][2] = (int) (colors[2] * 255.0);
-            outputData[row][i][3] = 0xFF;
-            
-        }
-    }
-}
-
-- (void)updateFrequencyLabel {
-	[self.currentPitchLabel setText:[NSString stringWithFormat:@"%.2f", self.currentFrequency]];
-}
-
-- (void)updateBandsLabel {
-    [self.currentBandsLabel setText:[NSString stringWithFormat:@"peak %3.2f (%d)", self->maxPeak, self->maxBand]];
-}
-
 - (void)drawRect
 {
-    
-    UIGraphicsBeginImageContext(imageView.frame.size);
+    UIGraphicsBeginImageContext(fftView.frame.size);
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     
     // fill the background of the square with grey
     CGContextSetRGBFillColor(currentContext, accel[0], accel[1], accel[2],1.0);
-    CGContextFillRect(currentContext, imageView.frame);
+    CGContextFillRect(currentContext, fftView.frame);
     
     //  draw multi touches
     CGContextSetRGBFillColor(currentContext, 255, 0, 255, 0.9);
@@ -330,11 +186,11 @@
     
     // flip the image
     CGAffineTransform flipVertical =
-    CGAffineTransformMake(1, 0, 0, -1, 0, imageView.image.size.height);
+    CGAffineTransformMake(1, 0, 0, -1, 0, fftView.frame.size.height);
     CGContextConcatCTM(currentContext, flipVertical);
     
-    float width = imageView.frame.size.width;
-    float height = imageView.frame.size.height;
+    float width = fftView.frame.size.width;
+    float height = fftView.frame.size.height;
     
     if( waveDrawMode == WAVE_LINE )
     {
@@ -366,8 +222,7 @@
             }
             else if( colorMode == PEAK_HIGHLIGHT )
             {
-                CGContextSetStrokeColorWithColor(
-                                                 currentContext,
+                CGContextSetStrokeColorWithColor(currentContext,
                                                  [UIColor colorWithHue:currentBands[currentFrame][i]/(maxPeak + 0.5)
                                                             saturation:1.0
                                                             brightness:1.0
@@ -375,8 +230,7 @@
             }
             else if( colorMode == CHROMATIC_SCALE )
             {
-                CGContextSetStrokeColorWithColor(
-                                                 currentContext,
+                CGContextSetStrokeColorWithColor(currentContext,
                                                  [UIColor colorWithHue:((float)i)/1024.0
                                                             saturation:1.0
                                                             brightness:1.0
@@ -384,9 +238,9 @@
             }
             
             if(yAxisScale == WAVE_LOG_SCALE)
-                val = scale * log2(currentBands[currentFrame][i]);
+                val = scale * 100 * log2(currentBands[currentFrame][i]);
             else if(yAxisScale == WAVE_LINEAR_SCALE)
-                val = scale * currentBands[currentFrame][i];
+                val = scale * 10 * currentBands[currentFrame][i];
             
             float xPos = i * width_convert;
             
@@ -397,7 +251,7 @@
         }
         
         UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
+        fftView.imageView.image = newImage;
     }
     
     if( waveDrawMode == WAVE_FLOWER)
@@ -406,7 +260,7 @@
         float x1, y1, x2, y2, x3, y3, x4, y4;
         float cosVal;
         float sinVal;
-
+        
         
         for(int i = 0; i < 1024; i++)
         {
@@ -446,61 +300,63 @@
             }
             
             if(yAxisScale == WAVE_LOG_SCALE)
-                val = scale * log2(currentBands[currentFrame][i]);
+                val = scale * 100 * log2(currentBands[currentFrame][i]);
             else if(yAxisScale == WAVE_LINEAR_SCALE)
-                val = scale * currentBands[currentFrame][i];
+                val = scale * 10 * currentBands[currentFrame][i];
             
-            cosVal = cosLookup[i];
-            sinVal = sinLookup[i];
+            cosVal = cosLookup[i] * val;
+            sinVal = sinLookup[i] * val;
             
-            x1 = width/2 + cosVal * val/2;
-            y1 = height/2 + sinVal * val/2;
-            x2 = width/2 - cosVal * val/2;
-            y2 = height/2 - sinVal * val/2;
-            x3 = width/2 + cosVal * val/2;
-            y3 = height/2 - sinVal * val/2;
-            x4 = width/2 - cosVal * val/2;
-            y4 = height/2 + sinVal * val/2;
+            int midX = width/2;
+            int midY = height/2;
+            
+            x1 = clamp( midX + cosVal, 0, width  );
+            y1 = clamp( midY + sinVal, 0, height );
+            x2 = clamp( midX - cosVal, 0, width  );
+            y2 = clamp( midY - sinVal, 0, height );
+            x3 = clamp( midX + cosVal, 0, width  );
+            y3 = clamp( midY - sinVal, 0, height );
+            x4 = clamp( midX - cosVal, 0, width  );
+            y4 = clamp( midY + sinVal, 0, height );
             
             CGContextMoveToPoint(currentContext, x1, y1);
             CGContextAddLineToPoint(currentContext, x2, y2);
             CGContextMoveToPoint(currentContext, x3, y3);
             CGContextAddLineToPoint(currentContext, x4, y4);
-
+            
             CGContextStrokePath(currentContext);
         }
         
         // save image
         UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
-        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
+        fftView.imageView.image = newImage;
         
     }
     
     if(waveDrawMode == WAVE_TEXTURE)
     {
+        
         if(self->waveDrawMode == WAVE_TEXTURE)
         {
-            for(int i = lastFrame; i <= currentFrame; i++)
+            while (lastFrame != currentFrame)
             {
-                [self colorImageRow:i];
-                if (i > textureHeight)
-                    i =  i % textureHeight;
+//                NSLog(@"lastFrame = %i", lastFrame);
+                [self colorImageRow:lastFrame];
+
+                lastFrame++;
+                if (lastFrame >= 1024) lastFrame -= 1024;
             }
-            lastFrame = currentFrame;
         }
         
         const int w = 1024;
-        const int h = textureHeight;
-        CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
+        const int h = 1024;
         CGContextRef bitmapContext=CGBitmapContextCreate(outputData, w, h, 8, 4*w, colorSpace,  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
-        CFRelease(colorSpace);
         CGImageRef cgImage=CGBitmapContextCreateImage(bitmapContext);
         CGContextRelease(bitmapContext);
         
         UIImage * newImage = [UIImage imageWithCGImage:cgImage];
+        fftView.imageView.image = newImage;
         CGImageRelease(cgImage);
-        
-        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
         
     }
     
@@ -512,19 +368,17 @@
         const int w = 32;
         const int h = 32;
         
-        CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
         CGContextRef bitmapContext=CGBitmapContextCreate(outputData[currentFrame], w, h, 8, 4*w, colorSpace,  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
-        CFRelease(colorSpace);
         CGImageRef cgImage=CGBitmapContextCreateImage(bitmapContext);
         CGContextRelease(bitmapContext);
         
         UIImage * newImage = [UIImage imageWithCGImage:cgImage];
+        fftView.imageView.image = newImage;
+
         CGImageRelease(cgImage);
         
-        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
-        
     }
-
+    
     if(waveDrawMode == WAVE_WALL)
     {
         
@@ -533,24 +387,171 @@
         const int w = 1;
         const int h = 1024;
         
-        CGColorSpaceRef colorSpace=CGColorSpaceCreateDeviceRGB();
         CGContextRef bitmapContext=CGBitmapContextCreate(outputData[currentFrame], w, h, 8, 4*w, colorSpace,  kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
-        CFRelease(colorSpace);
         CGImageRef cgImage=CGBitmapContextCreateImage(bitmapContext);
         CGContextRelease(bitmapContext);
         
         UIImage * newImage = [UIImage imageWithCGImage:cgImage];
+        fftView.imageView.image = newImage;
+
         CGImageRelease(cgImage);
-        
-        [imageView performSelectorOnMainThread:@selector(setImage:) withObject:newImage waitUntilDone:NO];
-        
     }
-    
-    
-    
     
     UIGraphicsEndImageContext(); // Add this line.
 }
+
+
+#pragma mark -
+#pragma mark Key Management
+// This method gets called by the rendering function. Update the UI with
+// the character type and store it in our string.
+- (void)frequencyChangedWithValue:(float)newFrequency{
+    
+	self.currentFrequency = newFrequency;
+    
+    pitchUpdateCount++;
+    if (pitchUpdateCount % 16 == 0)
+        [self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
+    
+	/*
+	 * If you want to display letter values for pitches, uncomment this code and
+	 * add your frequency to pitch mappings in KeyHelper.m
+     
+     
+     KeyHelper *helper = [KeyHelper sharedInstance];
+     NSString *closestChar = [helper closestCharForFrequency:newFrequency];
+     
+     // If the new sample has the same frequency as the last one, we should ignore
+     // it. This is a pretty inefficient way of doing comparisons, but it works.
+     if (![prevChar isEqualToString:closestChar]) {
+     self.prevChar = closestChar;
+     if ([closestChar isEqualToString:@"0"]) {
+     //	[self toggleListening:nil];
+     }
+     [self performSelectorInBackground:@selector(updateFrequencyLabel) withObject:nil];
+     NSString *appendedString = [key stringByAppendingString:closestChar];
+     self.key = [NSMutableString stringWithString:appendedString];
+     }
+     */
+	
+	
+}
+
+-(int)screenLength
+{
+    return ((int) paramAdjust * 1024);
+}
+
+- (void)bandsChangedWithValue:(float*)newBands numBands:(int)n;
+{
+    currentFrame++;
+    if(currentFrame >= 1024)
+        currentFrame -= 1024;
+    
+    for ( int i = 0; i < n; i+=2 )
+        currentBands[currentFrame][i/2] = newBands[i];
+    
+    // compute/update freq and peak every 16 frames
+    if( currentFrame % 16 == 0) // compute max val infrequently
+    {
+        float maxValItr = 0.0;
+        int maxBandItr = 0;
+        float itrVal = 0;
+        for ( int i = 0; i < n; i+=2 )
+        {
+            itrVal = currentBands[currentFrame][i/2];
+            if( itrVal > maxValItr )
+            {
+                maxValItr = itrVal;
+                maxBandItr = i;
+            }
+        }
+        self->maxBand = maxBandItr;
+        self->maxPeak = maxValItr;
+    }
+    
+    [fftView setNeedsDisplay];
+}
+
+// this fills in the pixels across one row (timepoint) of the data.
+-(void) colorImageRow:(int)row
+{
+    assert(row < 1024);
+    
+    const CGFloat* colors;
+    float value;
+    
+    for(int i = 0; i < 1024; i++) // across the columns.
+    {
+        value = scale * currentBands[row][i];
+        
+        // determine color for drawing mode
+        if( colorMode == HSV_COLOR )
+        {
+            [self getPointColor:pointColor forValue:value];
+            outputData[row][i][0] = (int) (pointColor[0]*255.0);
+            outputData[row][i][1] = (int) (pointColor[1]*255.0);
+            outputData[row][i][2] = (int) (pointColor[2]*255.0);
+            outputData[row][i][3] = 0xEF;
+        }
+        else if( colorMode == DISCRETE_SCALE )
+        {
+            [self getPointColorDiscrete:pointColor forValue:value];
+            outputData[row][i][0] = (int) (pointColor[0]*255.0);
+            outputData[row][i][1] = (int) (pointColor[1]*255.0);
+            outputData[row][i][2] = (int) (pointColor[2]*255.0);
+            outputData[row][i][3] = 0xEF;
+        }
+        else if( colorMode == GREY_SCALE )
+        {
+            int scaleValue = (int) ( value*255.0 );
+            outputData[row][i][0] = scaleValue;
+            outputData[row][i][1] = scaleValue;
+            outputData[row][i][2] = scaleValue;
+            outputData[row][i][3] = 0xEF;
+            
+        }
+        else if( colorMode == PEAK_HIGHLIGHT )
+        {
+            colors = CGColorGetComponents([UIColor colorWithHue:value
+                                                     saturation:1.0
+                                                     brightness:1.0
+                                                          alpha:1.0].CGColor );
+            
+            outputData[row][i][0] = (int) ((1.0 - colors[0]) * 255.0);
+            outputData[row][i][1] = (int) ((1.0 - colors[1]) * 255.0);
+            outputData[row][i][2] = (int) ((1.0 - colors[2]) * 255.0);
+            outputData[row][i][3] = 0xFF;
+        }
+        else if( colorMode == CHROMATIC_SCALE )
+        {
+            
+            colors = CGColorGetComponents([UIColor colorWithHue:((float)i)/1024.0
+                                                     saturation:value
+                                                     brightness:1.0
+                                                          alpha:1.0].CGColor );
+            outputData[row][i][0] = (int) (colors[0] * 255.0);
+            outputData[row][i][1] = (int) (colors[1] * 255.0);
+            outputData[row][i][2] = (int) (colors[2] * 255.0);
+            outputData[row][i][3] = 0xFF;
+            
+        }
+    }
+}
+
+- (void)updateFrequencyLabel {
+	[self.currentPitchLabel setText:[NSString stringWithFormat:@"%.2f", self.currentFrequency]];
+}
+
+- (void)updateBandsLabel {
+    [self.currentBandsLabel setText:[NSString stringWithFormat:@"peak %3.2f (%d)", self->maxPeak, self->maxBand]];
+}
+
+double clamp(double d, double min, double max) {
+    const double t = d < min ? min : d;
+    return t > max ? max : t;
+}
+
 
 -(void) getPointColorDiscrete:(CGFloat*)out_color
                      forValue:(float)voltage
@@ -672,7 +673,7 @@
     return out;
 }
 
--(IBAction)scaleValueChanged:(UISlider *)sender
+-(IBAction)scaleSliderValueChanged:(UISlider *)sender
 {
     scale = sender.value;
     [self.currentBandsLabel performSelectorOnMainThread:@selector(setText:)
@@ -680,13 +681,13 @@
                                           waitUntilDone:NO];
 }
 
--(IBAction)textureLengthValueChanged:(UISlider *)sender
+-(IBAction)paramSliderValueChanged:(UISlider *)sender
 {
-    textureHeight = sender.value;
-    if(textureHeight < 0)
-        textureHeight = 4;
+    paramAdjust = sender.value;
+    if(paramAdjust < 0)
+        paramAdjust = 4;
     [self.currentBandsLabel performSelectorOnMainThread:@selector(setText:)
-                                             withObject:[NSString stringWithFormat:@"TextureLength = %d", textureHeight]
+                                             withObject:[NSString stringWithFormat:@"TextureLength = %d", paramAdjust]
                                           waitUntilDone:NO];
 }
 
@@ -744,7 +745,7 @@
     int count = 0;
 	for (UITouch *touch in touches)
 	{
-		CGPoint pt = [touch locationInView:imageView];
+		CGPoint pt = [touch locationInView:fftView];
         touchPoints[count] = pt;
         count++;
 	}
@@ -756,7 +757,7 @@
     int count = 0;
     for (UITouch *touch in touches)
     {
-        CGPoint pt = [touch locationInView:imageView];
+        CGPoint pt = [touch locationInView:fftView];
         touchPoints[count] = pt;
         count++;
     }
@@ -769,7 +770,7 @@
     int count = 0;
     for (UITouch *touch in touches)
     {
-        CGPoint pt = [touch locationInView:imageView];
+        CGPoint pt = [touch locationInView:fftView];
         touchPoints[count] = pt;
         count++;
     }

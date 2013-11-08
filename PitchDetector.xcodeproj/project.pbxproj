@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* SafeSoundAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* SafeSoundAppDelegate.m */; };
+		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		A014E9FD1292513100F7F2AB /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A014E9FC1292513100F7F2AB /* Accelerate.framework */; };
 		A04F1A6D12767A05006E8FFA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04F1A6C12767A05006E8FFA /* CoreFoundation.framework */; };
 		A04F1A7112767A12006E8FFA /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04F1A7012767A12006E8FFA /* CoreAudio.framework */; };
@@ -20,7 +19,6 @@
 		A04F83CB127292D500B590A1 /* RIOInterface.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04F83CA127292D500B590A1 /* RIOInterface.mm */; };
 		A04F841D1272996900B590A1 /* KeyHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A04F841C1272996900B590A1 /* KeyHelper.m */; };
 		A061FB07127643D3002625EB /* ListenerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A061FB05127643D3002625EB /* ListenerViewController.m */; };
-		A061FB08127643D3002625EB /* ListenerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A061FB06127643D3002625EB /* ListenerViewController.xib */; };
 		A061FB2312765E99002625EB /* Sound_Wave_Listen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A061FB2212765E99002625EB /* Sound_Wave_Listen.jpg */; };
 		A0C953EF1277C94300BF51F0 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C953EE1277C94300BF51F0 /* CAXException.cpp */; };
 		C950950E126E71140033980B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C950950D126E71140033980B /* AudioToolbox.framework */; };
@@ -36,23 +34,24 @@
 		E46A5958161A321400467198 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5957161A321400467198 /* Default@2x.png */; };
 		E46A595A161A33A500467198 /* PITCH DETECTOR 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */; };
 		E475D4A6176F814400F6487A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E475D4A5176F814400F6487A /* Crashlytics.framework */; };
-		E49E9F59151B4FD900C8E375 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E49E9F58151B4FD900C8E375 /* MainWindow-iPad.xib */; };
 		E49E9F5D151B526400C8E375 /* newgrowth_500.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */; };
 		E4BC0B411770FA110065E21B /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B401770FA110065E21B /* NewRelicAgent.framework */; };
 		E4BC0B431770FA480065E21B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B421770FA480065E21B /* CoreTelephony.framework */; };
 		E4BC0B451770FA510065E21B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B441770FA510065E21B /* SystemConfiguration.framework */; };
 		E4BC0B471770FA600065E21B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B461770FA600065E21B /* libz.dylib */; };
+		E4D4AF93182C2A3700BBD322 /* FFTView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D4AF92182C2A3700BBD322 /* FFTView.m */; };
+		E4D4AF95182C350900BBD322 /* MainStoryboard-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4D4AF94182C350900BBD322 /* MainStoryboard-iPhone.storyboard */; };
+		E4D4AF97182C355000BBD322 /* MainStoryboard-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4D4AF96182C355000BBD322 /* MainStoryboard-iPad.storyboard */; };
 		E4DAFD64160D28AD0064F2B4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4DAFD63160D28AD0064F2B4 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* SafeSoundAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeSoundAppDelegate.h; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* SafeSoundAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafeSoundAppDelegate.m; sourceTree = "<group>"; };
+		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* PitchDetector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PitchDetector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* PitchDetector_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PitchDetector_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* PitchDetector-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PitchDetector-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -66,7 +65,6 @@
 		A04F841C1272996900B590A1 /* KeyHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyHelper.m; sourceTree = "<group>"; };
 		A061FB04127643D3002625EB /* ListenerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenerViewController.h; sourceTree = "<group>"; };
 		A061FB05127643D3002625EB /* ListenerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenerViewController.m; sourceTree = "<group>"; };
-		A061FB06127643D3002625EB /* ListenerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListenerViewController.xib; sourceTree = "<group>"; };
 		A061FB2212765E99002625EB /* Sound_Wave_Listen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sound_Wave_Listen.jpg; sourceTree = "<group>"; };
 		A061FB4C127676C4002625EB /* CAStreamBasicDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAStreamBasicDescription.h; sourceTree = "<group>"; };
 		A061FB591276781C002625EB /* CADebugMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADebugMacros.h; sourceTree = "<group>"; };
@@ -86,12 +84,15 @@
 		E46A5957161A321400467198 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PITCH DETECTOR 114x114.png"; sourceTree = "<group>"; };
 		E475D4A5176F814400F6487A /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		E49E9F58151B4FD900C8E375 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = newgrowth_500.jpg; sourceTree = "<group>"; };
 		E4BC0B401770FA110065E21B /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		E4BC0B421770FA480065E21B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		E4BC0B441770FA510065E21B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E4BC0B461770FA600065E21B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E4D4AF91182C2A3700BBD322 /* FFTView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFTView.h; sourceTree = "<group>"; };
+		E4D4AF92182C2A3700BBD322 /* FFTView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFTView.m; sourceTree = "<group>"; };
+		E4D4AF94182C350900BBD322 /* MainStoryboard-iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "MainStoryboard-iPhone.storyboard"; sourceTree = "<group>"; };
+		E4D4AF96182C355000BBD322 /* MainStoryboard-iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "MainStoryboard-iPad.storyboard"; sourceTree = "<group>"; };
 		E4DAFD63160D28AD0064F2B4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,8 +128,8 @@
 			isa = PBXGroup;
 			children = (
 				A061FB0E12764434002625EB /* View Controllers */,
-				1D3623240D0F684500981E51 /* SafeSoundAppDelegate.h */,
-				1D3623250D0F684500981E51 /* SafeSoundAppDelegate.m */,
+				1D3623240D0F684500981E51 /* AppDelegate.h */,
+				1D3623250D0F684500981E51 /* AppDelegate.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -144,6 +145,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E4D4AF94182C350900BBD322 /* MainStoryboard-iPhone.storyboard */,
+				E4D4AF96182C355000BBD322 /* MainStoryboard-iPad.storyboard */,
 				E4BC0B461770FA600065E21B /* libz.dylib */,
 				E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */,
 				E46A5957161A321400467198 /* Default@2x.png */,
@@ -178,7 +181,6 @@
 				A061FB2212765E99002625EB /* Sound_Wave_Listen.jpg */,
 				E46366F51613940600AFF701 /* ColorLogo-95.png */,
 				E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */,
-				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* PitchDetector-Info.plist */,
 			);
 			name = Resources;
@@ -223,9 +225,10 @@
 			children = (
 				A061FB04127643D3002625EB /* ListenerViewController.h */,
 				A061FB05127643D3002625EB /* ListenerViewController.m */,
-				A061FB06127643D3002625EB /* ListenerViewController.xib */,
 				E42CEE62182199CD005F81CB /* ScreenCaptureView.h */,
 				E42CEE63182199CD005F81CB /* ScreenCaptureView.m */,
+				E4D4AF91182C2A3700BBD322 /* FFTView.h */,
+				E4D4AF92182C2A3700BBD322 /* FFTView.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -244,7 +247,6 @@
 		E49E9F57151B4FD600C8E375 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
-				E49E9F58151B4FD900C8E375 /* MainWindow-iPad.xib */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -276,7 +278,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 57N59Y4UDW;
@@ -307,13 +309,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				A061FB08127643D3002625EB /* ListenerViewController.xib in Resources */,
 				A061FB2312765E99002625EB /* Sound_Wave_Listen.jpg in Resources */,
-				E49E9F59151B4FD900C8E375 /* MainWindow-iPad.xib in Resources */,
+				E4D4AF97182C355000BBD322 /* MainStoryboard-iPad.storyboard in Resources */,
 				E49E9F5D151B526400C8E375 /* newgrowth_500.jpg in Resources */,
 				E4DAFD64160D28AD0064F2B4 /* Default-568h@2x.png in Resources */,
 				E46366F61613940600AFF701 /* ColorLogo-95.png in Resources */,
+				E4D4AF95182C350900BBD322 /* MainStoryboard-iPhone.storyboard in Resources */,
 				E46A5952161A2BC700467198 /* pitchicon_114x114.png in Resources */,
 				E46A5954161A319500467198 /* pitch_detector_57x57.png in Resources */,
 				E46A5956161A320800467198 /* Default.png in Resources */,
@@ -346,12 +347,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				1D3623260D0F684500981E51 /* SafeSoundAppDelegate.m in Sources */,
+				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				A04F83CB127292D500B590A1 /* RIOInterface.mm in Sources */,
 				A04F841D1272996900B590A1 /* KeyHelper.m in Sources */,
 				E42CEE64182199CD005F81CB /* ScreenCaptureView.m in Sources */,
 				A061FB07127643D3002625EB /* ListenerViewController.m in Sources */,
 				A0C953EF1277C94300BF51F0 /* CAXException.cpp in Sources */,
+				E4D4AF93182C2A3700BBD322 /* FFTView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,12 +408,12 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Lew Hill (J7C6HZHGGQ)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = SafeSound;
 				PROVISIONING_PROFILE = "18A82318-4C72-45E5-8C68-321A73A109D2";
 				SDKROOT = iphoneos;
@@ -422,7 +424,6 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Lew Hill (J7C6HZHGGQ)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

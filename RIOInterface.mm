@@ -192,11 +192,6 @@ OSStatus RenderFFTCallback (void					*inRefCon,
 		// Update the UI with our newly acquired frequency value.
 		[THIS->listener frequencyChangedWithValue:bin*(THIS->sampleRate/bufferCapacity)];
 		[THIS->listener bandsChangedWithValue:magSq numBands:n];
-        
-        //LH it appears we can can get compute the frequency of a bin by (bin * (THIS->sampleRate/bufferCapacity)
-                
-//		printf("Dominant frequency: %f   bin: %d \n", bin*(THIS->sampleRate bufferCapacity), bin);
-        
  	}
 		
 	return noErr;
@@ -434,9 +429,6 @@ static RIOInterface *sharedInstance = nil;
     return UINT_MAX;  // denotes an object that cannot be released
 }
 
-- (void)release {
-    //do nothing
-}
 
 - (id)autorelease {
     return self;

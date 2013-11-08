@@ -38,10 +38,10 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSMainNibFile</key>
-	<string>MainWindow</string>
-	<key>NSMainNibFile~ipad</key>
-	<string>MainWindow-iPad</string>
+	<key>UIMainStoryboardFile</key>
+	<string>MainStoryboard-iPhone</string>
+	<key>UIMainStoryboardFile~ipad</key>
+	<string>MainStoryboard-iPad</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>

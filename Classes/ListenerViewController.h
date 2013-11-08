@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ScreenCaptureView.h"
 
-@class RIOInterface;
+@class RIOInterface, FFTView;
 
 typedef enum {
     PEAK_HIGHLIGHT = 0,
@@ -54,7 +54,6 @@ typedef struct
     UILabel *currentPitchLabel;
 	UILabel *currentBandsLabel;
 	UIButton *listenButton;
-	UIImageView* imageView;
     
 	BOOL isListening;
 	RIOInterface *rioRef;
@@ -63,28 +62,28 @@ typedef struct
 	float currentFrequency;
     float maxPeak;
     int maxBand;
-    int currentFrame;
-    int lastFrame;
 	NSString *prevChar;
     float scale;
-    int textureHeight;
+    int paramAdjust;
     int pitchUpdateCount;
-    
-    float currentBands[1024][1024];
-    Byte outputData[1024][1024][4];
-    CGFloat pointColor[4];
     
     float cosLookup[1024];
     float sinLookup[1024];
-    
+
+    float currentBands[1024][1024];
+    Byte outputData[1024][1024][4];
+    CGFloat pointColor[4];
+
     float accel[3];
-    
+    int touchCount;
+    CGPoint touchPoints[20];
+
     WaveDrawMode waveDrawMode;
     ColorMode colorMode;
     WaveAxisScale yAxisScale;
-    
-    CGPoint touchPoints[20];
-    int touchCount;
+
+    int currentFrame;
+    int lastFrame;
 }
 
 @property(nonatomic, retain) IBOutlet UIView *controlPanelView;
@@ -97,7 +96,7 @@ typedef struct
 @property(nonatomic, retain) IBOutlet UIButton *stopButton;
 
 @property(nonatomic, retain) IBOutlet UISlider *scaleSlider;
-@property(nonatomic, retain) IBOutlet UISlider *textureLengthSlider;
+@property(nonatomic, retain) IBOutlet UISlider *paramSlider;
 @property(nonatomic, retain) IBOutlet UISegmentedControl *drawModeControl;
 @property(nonatomic, retain) IBOutlet UISegmentedControl *logLinModeControl;
 @property(nonatomic, retain) IBOutlet UISegmentedControl *colorModeControl;
@@ -106,20 +105,21 @@ typedef struct
 @property(nonatomic, retain) NSString *prevChar;
 @property(nonatomic, assign) RIOInterface *rioRef;
 @property(nonatomic, assign) float currentFrequency;
-@property(nonatomic, assign) IBOutlet UIImageView* imageView;
 @property(assign) BOOL isListening;
+
+@property CGColorSpaceRef colorSpace;
 
 @property (nonatomic, retain) UIAccelerometer *accelerometer;
 
-@property (nonatomic, retain) IBOutlet ScreenCaptureView *screenCaptureView;
+@property (nonatomic, retain) IBOutlet FFTView *fftView;
 
 #pragma mark Listener Controls
 - (IBAction)toggleListening:(id)sender;
 
 - (void)startListener;
 - (void)stopListener;
--(IBAction)scaleValueChanged:(UISlider *)sender;
--(IBAction)textureLengthValueChanged:(UISlider *)sender;
+-(IBAction)scaleSliderValueChanged:(UISlider *)sender;
+-(IBAction)paramSliderValueChanged:(UISlider *)sender;
 -(IBAction)drawModeChangedAction:(id)sender;
 -(IBAction)logLinModeControlChangedAction:(id)sender;
 -(IBAction)colorModeChangedAction:(id)sender;
@@ -128,12 +128,11 @@ typedef struct
 - (void)frequencyChangedWithValue:(float)newFrequency;
 - (void)bandsChangedWithValue:(float*)newBands numBands:(int)n;
 - (void)updateFrequencyLabel;
-- (void)drawRect;
 
 - (void)getPointColor:(CGFloat*)out_color
-             forValue:(float)voltage;
--(void) getPointColorDiscrete:(CGFloat*)out_color
                     forValue:(float)voltage;
+- (void) getPointColorDiscrete:(CGFloat*)out_color
+                      forValue:(float)voltage;
 
 
 -(void) colorImageRow:(int)row;
@@ -141,6 +140,8 @@ typedef struct
 // screen recording
 -(IBAction)startRecording:(id)sender;
 -(IBAction)stopRecording:(id)sender;
+
+- (void)drawRect;
 
 
 

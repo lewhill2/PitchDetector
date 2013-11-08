@@ -15,13 +15,9 @@
 #import <UIKit/UIKit.h>
 
 
-@interface SafeSoundAppDelegate : NSObject <UIApplicationDelegate> {
-    UIWindow *window;
-	UIViewController *viewController;
-}
+@interface AppDelegate : NSObject <UIApplicationDelegate>
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UIViewController *viewController;
+@property (strong, nonatomic) UIWindow *window;
 
 @end
 

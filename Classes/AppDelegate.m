@@ -2,8 +2,6 @@
 //  ToneGeneratorAppDelegate.m
 //  ToneGenerator
 //
-//  Created by Matt Gallagher on 2010/10/20.
-//  Copyright 2010 Matt Gallagher. All rights reserved.
 //
 //  Permission is given to use this source code file, free of charge, in any
 //  project, commercial or otherwise, entirely at your risk, with the condition
@@ -12,7 +10,7 @@
 //  appreciated but not required.
 //
 
-#import "SafeSoundAppDelegate.h"
+#import "AppDelegate.h"
 #import "RIOInterface.h"
 
 #import <Crashlytics/Crashlytics.h>
@@ -20,11 +18,7 @@
 #import <NewRelicAgent/NewRelicAgent.h>
 
 
-@implementation SafeSoundAppDelegate
-
-@synthesize window;
-@synthesize viewController;
-
+@implementation AppDelegate
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -45,10 +39,6 @@
 	[rioRef setFrequency:294];
 	[rioRef initializeAudioSession];
 	
-    // Add the view controller's view to the window and display.
-    [window addSubview:viewController.view];
-	[window makeKeyAndVisible];
-
     return YES;
 }
 
@@ -99,13 +89,5 @@
      Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
      */
 }
-
-
-- (void)dealloc {
-	[viewController release];
-    [window release];
-    [super dealloc];
-}
-
 
 @end
