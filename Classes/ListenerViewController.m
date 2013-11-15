@@ -428,7 +428,7 @@
         
         CGGradientDrawingOptions options = kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation;
         
-        CGContextDrawLinearGradient(currentContext, [self createGradient], CGPointMake(width/2,0), CGPointMake(width/2,height), options);
+        CGContextDrawLinearGradient(currentContext, [self createGradient], CGPointMake(width/2,height), CGPointMake(width/2,0), options);
         
         
         UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
