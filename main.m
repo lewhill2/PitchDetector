@@ -2,8 +2,8 @@
 //  main.m
 //  ToneGenerator
 //
-//  Created by Matt Gallagher on 2010/10/20.
-//  Copyright 2010 Matt Gallagher. All rights reserved.
+//  Created by  on 2010/10/20.
+//  Copyright 2010 . All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

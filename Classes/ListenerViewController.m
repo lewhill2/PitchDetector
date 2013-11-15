@@ -51,6 +51,8 @@
 }
 
 
+
+
 #pragma mark -
 #pragma mark Lifecycle
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -119,9 +121,9 @@
     controlPanelView.hidden = !controlPanelView.hidden;
 }
 - (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
-    accel[0] = acceleration.x;
-    accel[1] = acceleration.y;
-    accel[2] = acceleration.z;
+    accel[0] = accel[0] * 0.8 + acceleration.x*0.1;
+    accel[1] = accel[1] * 0.8 + acceleration.y*0.1;
+    accel[2] = accel[2] * 0.8 + acceleration.z*0.1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -387,7 +389,7 @@
         CGImageRelease(cgImage);
         
     }
-    
+
     if(waveDrawMode == WAVE_WALL)
     {
         
@@ -405,8 +407,67 @@
 
         CGImageRelease(cgImage);
     }
+
+    if(waveDrawMode == WAVE_GRADIENT)
+    {
+        
+        [self colorImageRow:currentFrame];
+        
+        // render this image to a 160x160 quad
+        float width = 256;
+        float height = 256;
+        CGSize renderSize = CGSizeMake(width,height);
+        CGRect renderRect = CGRectMake(0,0,width,height);
+        
+        UIGraphicsBeginImageContext(renderSize);
+        CGContextRef currentContext = UIGraphicsGetCurrentContext();
+        
+        // fill the background of the square with grey
+        CGContextSetRGBFillColor(currentContext, accel[0], accel[1], accel[2],1.0);
+        CGContextFillRect(currentContext, renderRect);
+        
+        CGGradientDrawingOptions options = kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation;
+        
+        CGContextDrawLinearGradient(currentContext, [self createGradient], CGPointMake(width/2,0), CGPointMake(width/2,height), options);
+        
+        
+        UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+        [fftView setImage:newImage];
+    }
     
     UIGraphicsEndImageContext(); // Add this line.
+}
+
+-(CGGradientRef)createGradient
+{
+    const size_t numComponents = 32;
+    int step = 1024 / numComponents;
+    
+    CGFloat components[numComponents * 4];
+    CGFloat locations[numComponents];
+    float thisSum[numComponents];
+    static float average[numComponents];
+    
+    for (int i = 0; i < numComponents; i++)
+    {
+        thisSum[i] = 0;
+        for (int j = 0; j < step; j++)
+            thisSum[i] += currentBands[currentFrame][i*step+j] / step;
+        
+        locations[i] = (float)i / (float)numComponents;
+
+        float scaleAmt = thisSum[i] *scale;
+        average[i] = ( scaleAmt * 0.15 ) + (average[i] * .75);
+        
+        components[i*4 + 0] = average[i];
+        components[i*4 + 1] = average[i];
+        components[i*4 + 2] = average[i];
+        components[i*4 + 3] = average[i];
+    }
+    
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, components, locations, numComponents);
+
+    return gradient;
 }
 
 
@@ -711,6 +772,8 @@ double clamp(double d, double min, double max) {
         waveDrawMode = WAVE_BLOCKS;
     else if (drawModeControl.selectedSegmentIndex == 4)
         waveDrawMode = WAVE_WALL;
+    else if (drawModeControl.selectedSegmentIndex == 5)
+        waveDrawMode = WAVE_GRADIENT;
     
 }
 
