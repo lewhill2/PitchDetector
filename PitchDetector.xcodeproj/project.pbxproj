@@ -22,6 +22,9 @@
 		A061FB2312765E99002625EB /* Sound_Wave_Listen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A061FB2212765E99002625EB /* Sound_Wave_Listen.jpg */; };
 		A0C953EF1277C94300BF51F0 /* CAXException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0C953EE1277C94300BF51F0 /* CAXException.cpp */; };
 		C950950E126E71140033980B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C950950D126E71140033980B /* AudioToolbox.framework */; };
+		E409AC9818EA923A00D1E0F8 /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = E409AC9518EA923A00D1E0F8 /* stop.png */; };
+		E409AC9918EA923A00D1E0F8 /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = E409AC9618EA923A00D1E0F8 /* record.png */; };
+		E409AC9A18EA923A00D1E0F8 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = E409AC9718EA923A00D1E0F8 /* play.png */; };
 		E42CEE64182199CD005F81CB /* ScreenCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = E42CEE63182199CD005F81CB /* ScreenCaptureView.m */; };
 		E42CEE6618219ADD005F81CB /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42CEE6518219ADD005F81CB /* AssetsLibrary.framework */; };
 		E42CEE6818219AFD005F81CB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E42CEE6718219AFD005F81CB /* CoreMedia.framework */; };
@@ -36,7 +39,6 @@
 		E46A595A161A33A500467198 /* PITCH DETECTOR 114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */; };
 		E475D4A6176F814400F6487A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E475D4A5176F814400F6487A /* Crashlytics.framework */; };
 		E49E9F5D151B526400C8E375 /* newgrowth_500.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */; };
-		E4BC0B411770FA110065E21B /* NewRelicAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B401770FA110065E21B /* NewRelicAgent.framework */; };
 		E4BC0B431770FA480065E21B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B421770FA480065E21B /* CoreTelephony.framework */; };
 		E4BC0B451770FA510065E21B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B441770FA510065E21B /* SystemConfiguration.framework */; };
 		E4BC0B471770FA600065E21B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BC0B461770FA600065E21B /* libz.dylib */; };
@@ -72,6 +74,9 @@
 		A0C953DD1277C8BA00BF51F0 /* CAXException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAXException.h; sourceTree = "<group>"; };
 		A0C953EE1277C94300BF51F0 /* CAXException.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAXException.cpp; sourceTree = "<group>"; };
 		C950950D126E71140033980B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E409AC9518EA923A00D1E0F8 /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
+		E409AC9618EA923A00D1E0F8 /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
+		E409AC9718EA923A00D1E0F8 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		E42CEE62182199CD005F81CB /* ScreenCaptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenCaptureView.h; sourceTree = "<group>"; };
 		E42CEE63182199CD005F81CB /* ScreenCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenCaptureView.m; sourceTree = "<group>"; };
 		E42CEE6518219ADD005F81CB /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -87,7 +92,6 @@
 		E46A5959161A33A500467198 /* PITCH DETECTOR 114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PITCH DETECTOR 114x114.png"; sourceTree = "<group>"; };
 		E475D4A5176F814400F6487A /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		E49E9F5C151B526400C8E375 /* newgrowth_500.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = newgrowth_500.jpg; sourceTree = "<group>"; };
-		E4BC0B401770FA110065E21B /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NewRelicAgent.framework; sourceTree = "<group>"; };
 		E4BC0B421770FA480065E21B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		E4BC0B441770FA510065E21B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E4BC0B461770FA600065E21B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -120,7 +124,6 @@
 				A04F1A7112767A12006E8FFA /* CoreAudio.framework in Frameworks */,
 				A014E9FD1292513100F7F2AB /* Accelerate.framework in Frameworks */,
 				E475D4A6176F814400F6487A /* Crashlytics.framework in Frameworks */,
-				E4BC0B411770FA110065E21B /* NewRelicAgent.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +167,9 @@
 				E49E9F57151B4FD600C8E375 /* iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				E409AC9518EA923A00D1E0F8 /* stop.png */,
+				E409AC9618EA923A00D1E0F8 /* record.png */,
+				E409AC9718EA923A00D1E0F8 /* play.png */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -199,7 +205,6 @@
 				E42CEE6518219ADD005F81CB /* AssetsLibrary.framework */,
 				E4BC0B441770FA510065E21B /* SystemConfiguration.framework */,
 				E4BC0B421770FA480065E21B /* CoreTelephony.framework */,
-				E4BC0B401770FA110065E21B /* NewRelicAgent.framework */,
 				E475D4A5176F814400F6487A /* Crashlytics.framework */,
 				A014E9FC1292513100F7F2AB /* Accelerate.framework */,
 				C950950D126E71140033980B /* AudioToolbox.framework */,
@@ -315,9 +320,12 @@
 			files = (
 				A061FB2312765E99002625EB /* Sound_Wave_Listen.jpg in Resources */,
 				E4D4AF97182C355000BBD322 /* MainStoryboard-iPad.storyboard in Resources */,
+				E409AC9918EA923A00D1E0F8 /* record.png in Resources */,
 				E49E9F5D151B526400C8E375 /* newgrowth_500.jpg in Resources */,
 				E4DAFD64160D28AD0064F2B4 /* Default-568h@2x.png in Resources */,
 				E46366F61613940600AFF701 /* ColorLogo-95.png in Resources */,
+				E409AC9818EA923A00D1E0F8 /* stop.png in Resources */,
+				E409AC9A18EA923A00D1E0F8 /* play.png in Resources */,
 				E4D4AF95182C350900BBD322 /* MainStoryboard-iPhone.storyboard in Resources */,
 				E46A5952161A2BC700467198 /* pitchicon_114x114.png in Resources */,
 				E46A5954161A319500467198 /* pitch_detector_57x57.png in Resources */,

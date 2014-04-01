@@ -51,7 +51,7 @@ typedef struct
     double v;       // percent [0 - 1]
 } HSV;
 
-@interface ListenerViewController : UIViewController  <UIAccelerometerDelegate> {
+@interface ListenerViewController : UIViewController  <UIAccelerometerDelegate, UIPickerViewDataSource, UIPickerViewDelegate> {
     
     UILabel *currentPitchLabel;
 	UILabel *currentBandsLabel;
@@ -97,11 +97,10 @@ typedef struct
 @property(nonatomic, retain) IBOutlet UIButton *recordButton;
 @property(nonatomic, retain) IBOutlet UIButton *stopButton;
 
+@property(nonatomic, retain) IBOutlet UIPickerView *modePicker;
+
 @property(nonatomic, retain) IBOutlet UISlider *scaleSlider;
 @property(nonatomic, retain) IBOutlet UISlider *paramSlider;
-@property(nonatomic, retain) IBOutlet UISegmentedControl *drawModeControl;
-@property(nonatomic, retain) IBOutlet UISegmentedControl *logLinModeControl;
-@property(nonatomic, retain) IBOutlet UISegmentedControl *colorModeControl;
 
 @property(nonatomic, retain) NSMutableString *pitchKey;
 @property(nonatomic, retain) NSString *prevChar;
@@ -122,9 +121,7 @@ typedef struct
 - (void)stopListener;
 -(IBAction)scaleSliderValueChanged:(UISlider *)sender;
 -(IBAction)paramSliderValueChanged:(UISlider *)sender;
--(IBAction)drawModeChangedAction:(id)sender;
--(IBAction)logLinModeControlChangedAction:(id)sender;
--(IBAction)colorModeChangedAction:(id)sender;
+
 -(void) handleSingleTap:(UITapGestureRecognizer *)gr;
 
 - (void)frequencyChangedWithValue:(float)newFrequency;
@@ -145,6 +142,9 @@ typedef struct
 
 - (void)drawRect;
 
++(NSArray*) renderingModes;
++(NSArray*) coloringModes;
++(NSArray*) scalingModes;
 
 
 

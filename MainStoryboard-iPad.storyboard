@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="U7K-Q4-qSV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="U7K-Q4-qSV">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Listener View Controller-->
@@ -84,21 +84,6 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dnE-QA-bFc">
-                                        <rect key="frame" x="10" y="64" width="300" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <segments>
-                                            <segment title="Lines"/>
-                                            <segment title="Texture"/>
-                                            <segment title="Flower"/>
-                                            <segment title="Blocks"/>
-                                            <segment title="Wall"/>
-                                        </segments>
-                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="drawModeChangedAction:" destination="U7K-Q4-qSV" eventType="valueChanged" id="gbU-v0-3iQ"/>
-                                        </connections>
-                                    </segmentedControl>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lyX-BE-LkX">
                                         <rect key="frame" x="24" y="230" width="273" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -113,34 +98,6 @@
                                             <action selector="paramSliderValueChanged:" destination="U7K-Q4-qSV" eventType="valueChanged" id="7Ki-Nw-g3I"/>
                                         </connections>
                                     </slider>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vr1-O3-kkw">
-                                        <rect key="frame" x="68" y="166" width="185" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <segments>
-                                            <segment title="Lin"/>
-                                            <segment title="Log"/>
-                                            <segment title="X^2"/>
-                                        </segments>
-                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="logLinModeControlChangedAction:" destination="U7K-Q4-qSV" eventType="valueChanged" id="jz1-Qc-v80"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="fdp-iO-Ixg">
-                                        <rect key="frame" x="10" y="115" width="300" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <segments>
-                                            <segment title="Peak"/>
-                                            <segment title="Chroma"/>
-                                            <segment title="HSV"/>
-                                            <segment title="Discr"/>
-                                            <segment title="Grey"/>
-                                        </segments>
-                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="colorModeChangedAction:" destination="U7K-Q4-qSV" eventType="valueChanged" id="Bdi-bd-6wm"/>
-                                        </connections>
-                                    </segmentedControl>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Data Scale" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w85-dg-TFf">
                                         <rect key="frame" x="26" y="211" width="84" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -155,6 +112,14 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A9j-7l-jeC">
+                                        <rect key="frame" x="0.0" y="25" width="320" height="216"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="U7K-Q4-qSV" id="EQL-IJ-F2n"/>
+                                            <outlet property="delegate" destination="U7K-Q4-qSV" id="xsl-mc-rRg"/>
+                                        </connections>
+                                    </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="0.62" colorSpace="calibratedRGB"/>
                                 <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -174,14 +139,12 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
-                        <outlet property="colorModeControl" destination="fdp-iO-Ixg" id="lV4-lG-O7x"/>
                         <outlet property="controlPanelView" destination="7hU-l4-IFG" id="JhK-ci-RUp"/>
                         <outlet property="currentBandsLabel" destination="k7U-ve-2TQ" id="jO5-8x-jc3"/>
                         <outlet property="currentPitchLabel" destination="ZYF-BC-OEA" id="brS-fn-VIt"/>
-                        <outlet property="drawModeControl" destination="dnE-QA-bFc" id="Cty-Uj-6ox"/>
                         <outlet property="fftView" destination="rhb-w9-vzA" id="Vvu-w7-lbb"/>
                         <outlet property="listenButton" destination="mYp-v3-7Fb" id="Lc6-oh-w0Q"/>
-                        <outlet property="logLinModeControl" destination="vr1-O3-kkw" id="hI0-Vo-t0d"/>
+                        <outlet property="modePicker" destination="A9j-7l-jeC" id="ORa-Dr-qao"/>
                         <outlet property="paramSlider" destination="nqU-R9-ZIg" id="YEY-yA-5zm"/>
                         <outlet property="recordButton" destination="9i7-27-Fn8" id="zFF-mq-26b"/>
                         <outlet property="scaleSlider" destination="lyX-BE-LkX" id="T1Y-cm-PTS"/>

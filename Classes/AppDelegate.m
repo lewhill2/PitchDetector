@@ -15,8 +15,6 @@
 
 #import <Crashlytics/Crashlytics.h>
 
-#import <NewRelicAgent/NewRelicAgent.h>
-
 
 @implementation AppDelegate
 
@@ -29,9 +27,6 @@
 	
     // Crashlytics startup //
     [Crashlytics startWithAPIKey:@"24998ac365c4d6508912b2c9dcfa520457ae894d"];
-    
-    // New Relic Startup
-    [NewRelicAgent startWithApplicationToken:@"AAa025617c45c0cecaca20934bc2328a090f315c4c"];
     
 	/**RIO session setup */
 	RIOInterface *rioRef = [RIOInterface sharedInstance];

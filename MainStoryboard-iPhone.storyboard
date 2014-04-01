@@ -1,39 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="AIz-fn-0G3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="AIz-fn-0G3">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Listener View Controller-->
         <scene sceneID="XPd-s3-6l7">
             <objects>
                 <viewController id="AIz-fn-0G3" customClass="ListenerViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="SHN-YA-Fyg"/>
-                        <viewControllerLayoutGuide type="bottom" id="tb2-tF-zjn"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="b7R-7f-VRQ" customClass="FFTView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ColorLogo-95.png" translatesAutoresizingMaskIntoConstraints="NO" id="nQa-M1-eWW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ColorLogo-95.png" id="nQa-M1-eWW">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qct-nK-o4Q">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="377"/>
+                            <view contentMode="scaleToFill" id="Qct-nK-o4Q">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Peak Pitch:" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="jWn-3a-hTc">
-                                        <rect key="frame" x="49" y="274" width="88" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Peak Pitch:" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="jWn-3a-hTc">
+                                        <rect key="frame" x="49" y="369" width="88" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="n/a" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="TPW-Ia-1O5">
-                                        <rect key="frame" x="166" y="274" width="83" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="n/a" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="TPW-Ia-1O5">
+                                        <rect key="frame" x="166" y="369" width="83" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" none="YES" updatesFrequently="YES"/>
@@ -42,122 +38,79 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJK-Pb-0ff">
-                                        <rect key="frame" x="10" y="4" width="67" height="36"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="yJK-Pb-0ff">
+                                        <rect key="frame" x="0.0" y="23" width="100" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                        <state key="normal" title="Run/Stop">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.14999999999999999" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="play.png">
+                                            <color key="titleShadowColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                         </state>
                                         <connections>
                                             <action selector="toggleListening:" destination="AIz-fn-0G3" eventType="touchUpInside" id="spH-fS-XkU"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCZ-Fi-unE">
-                                        <rect key="frame" x="121" y="4" width="78" height="36"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JCZ-Fi-unE">
+                                        <rect key="frame" x="110" y="23" width="100" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                        <state key="normal" title="Record">
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.14999999999999999" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="record.png">
                                             <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                         </state>
                                         <connections>
                                             <action selector="startRecording:" destination="AIz-fn-0G3" eventType="touchDown" id="6Gl-bE-WQu"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jyx-Y1-eb6">
-                                        <rect key="frame" x="232" y="4" width="78" height="36"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jyx-Y1-eb6">
+                                        <rect key="frame" x="220" y="23" width="100" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
-                                        <state key="normal" title="Stop">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.14999999999999999" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="stop.png">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                         </state>
                                         <connections>
                                             <action selector="stopRecording:" destination="AIz-fn-0G3" eventType="touchDown" id="1oZ-SF-6wj"/>
                                         </connections>
                                     </button>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9uX-vq-HIA">
-                                        <rect key="frame" x="10" y="49" width="300" height="29"/>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="cfG-bf-xqJ">
+                                        <rect key="frame" x="23" y="279" width="273" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <segments>
-                                            <segment title="LI"/>
-                                            <segment title="TXT"/>
-                                            <segment title="Flw"/>
-                                            <segment title="Blk"/>
-                                            <segment title="Wall"/>
-                                            <segment title="Gra"/>
-                                        </segments>
-                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="drawModeChangedAction:" destination="AIz-fn-0G3" eventType="valueChanged" id="bRq-8I-Jkh"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cfG-bf-xqJ">
-                                        <rect key="frame" x="24" y="195" width="273" height="34"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="minimumTrackTintColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="0.16" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <color key="thumbTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="scaleSliderValueChanged:" destination="AIz-fn-0G3" eventType="valueChanged" id="WPH-L7-sCx"/>
                                         </connections>
                                     </slider>
-                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="bBu-KB-18m">
-                                        <rect key="frame" x="24" y="244" width="273" height="34"/>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="bBu-KB-18m">
+                                        <rect key="frame" x="23" y="328" width="273" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="minimumTrackTintColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="0.16" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <color key="thumbTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="paramSliderValueChanged:" destination="AIz-fn-0G3" eventType="valueChanged" id="Ohz-gn-SUb"/>
                                         </connections>
                                     </slider>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="F3G-qq-EMf">
-                                        <rect key="frame" x="67" y="146" width="187" height="29"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="FFT Labels 1 2 3 4" lineBreakMode="tailTruncation" minimumFontSize="10" id="02P-gp-PZL">
+                                        <rect key="frame" x="66" y="409" width="159" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <segments>
-                                            <segment title="Lin"/>
-                                            <segment title="Log"/>
-                                            <segment title="X^2"/>
-                                        </segments>
-                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" id="yed-Mm-wGb">
+                                        <rect key="frame" x="0.0" y="84" width="320" height="162"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.14999999999999999" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <action selector="logLinModeControlChangedAction:" destination="AIz-fn-0G3" eventType="valueChanged" id="9lM-XG-CA9"/>
+                                            <outlet property="dataSource" destination="AIz-fn-0G3" id="EG7-lv-p3a"/>
+                                            <outlet property="delegate" destination="AIz-fn-0G3" id="tQm-9g-slZ"/>
                                         </connections>
-                                    </segmentedControl>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gys-bi-Zf1">
-                                        <rect key="frame" x="10" y="96" width="300" height="29"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <segments>
-                                            <segment title="Peak"/>
-                                            <segment title="Chroma"/>
-                                            <segment title="HSV"/>
-                                            <segment title="Discr"/>
-                                            <segment title="Grey"/>
-                                        </segments>
-                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <action selector="colorModeChangedAction:" destination="AIz-fn-0G3" eventType="valueChanged" id="bxf-h8-Tqk"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Data Scale" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ts-MG-fSc">
-                                        <rect key="frame" x="11" y="181" width="84" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Parameter Adjust" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9c-IL-r0R">
-                                        <rect key="frame" x="11" y="226" width="133" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="FFT Labels 1 2 3 4" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="02P-gp-PZL">
-                                        <rect key="frame" x="67" y="295" width="159" height="27"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    </pickerView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="0.62" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="0.16" colorSpace="calibratedRGB"/>
                                 <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                             </view>
                         </subviews>
@@ -174,15 +127,14 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
                     <connections>
-                        <outlet property="colorModeControl" destination="gys-bi-Zf1" id="SCp-QU-4hO"/>
                         <outlet property="controlPanelView" destination="Qct-nK-o4Q" id="GQB-lj-yKJ"/>
                         <outlet property="currentBandsLabel" destination="02P-gp-PZL" id="klb-n8-vXG"/>
                         <outlet property="currentPitchLabel" destination="TPW-Ia-1O5" id="3Dq-rA-0CL"/>
-                        <outlet property="drawModeControl" destination="9uX-vq-HIA" id="tXO-RG-mcj"/>
                         <outlet property="fftView" destination="b7R-7f-VRQ" id="Hoq-1z-vkF"/>
                         <outlet property="listenButton" destination="yJK-Pb-0ff" id="UHa-yT-c2p"/>
-                        <outlet property="logLinModeControl" destination="F3G-qq-EMf" id="svd-xl-Ejs"/>
+                        <outlet property="modePicker" destination="yed-Mm-wGb" id="xJM-F4-Qgx"/>
                         <outlet property="paramSlider" destination="bBu-KB-18m" id="zhB-c2-ALS"/>
                         <outlet property="recordButton" destination="JCZ-Fi-unE" id="otY-1S-OV2"/>
                         <outlet property="scaleSlider" destination="cfG-bf-xqJ" id="W42-EH-0Ob"/>
@@ -196,6 +148,9 @@
     </scenes>
     <resources>
         <image name="ColorLogo-95.png" width="169" height="95"/>
+        <image name="play.png" width="30" height="30"/>
+        <image name="record.png" width="30" height="30"/>
+        <image name="stop.png" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -16,17 +16,15 @@
 @implementation ListenerViewController
 
 @synthesize currentPitchLabel, currentBandsLabel, listenButton, pitchKey, prevChar, isListening, rioRef;
-@synthesize currentFrequency, drawModeControl, colorModeControl, scaleSlider, paramSlider, logLinModeControl, accelerometer, controlPanelView, fftView, colorSpace;
+@synthesize currentFrequency, scaleSlider, paramSlider, accelerometer, controlPanelView, fftView, colorSpace, modePicker;
 
 #pragma mark -
 #pragma mark Listener Controls
 - (IBAction)toggleListening:(id)sender {
 	if (isListening) {
 		[self stopListener];
-		[listenButton setTitle:@"Start" forState:UIControlStateNormal];
 	} else {
 		[self startListener];
-		[listenButton setTitle:@"Stop" forState:UIControlStateNormal];
 	}
 	
 	isListening = !isListening;
@@ -68,18 +66,14 @@
     scale = 0.5;
     scaleSlider.value = scale;
     
-    paramAdjust = 0.5;
+    paramAdjust = 0.0;
     paramSlider.value = paramAdjust;
     fftView.param = paramAdjust;
     
     // init color and draw mode selector
-    colorModeControl.selectedSegmentIndex = PEAK_HIGHLIGHT;
     colorMode = PEAK_HIGHLIGHT;
-    drawModeControl.selectedSegmentIndex = WAVE_LINE;
     waveDrawMode = WAVE_LINE;
-    
     yAxisScale = WAVE_LINEAR_SCALE;
-    
     
     for(int i = 0; i < 1024; i++)
     {
@@ -115,6 +109,67 @@
     [fftView addGestureRecognizer: singleTap];
 }
 
++(NSArray*) renderingModes
+{
+    return [NSArray arrayWithObjects:@"Lines", @"Texture", @"Flower", @"Blocks", @"Wall", @"Gradient", nil];
+}
+
++(NSArray*) coloringModes
+{
+    return [NSArray arrayWithObjects:@"Peak", @"Chroma", @"HSV", @"Discrete", @"Grey", nil];
+}
+
++(NSArray*) scalingModes
+{
+    return [NSArray arrayWithObjects:@"Linear", @"Log", @"X^2", nil];
+}
+
+- (void)pickerView:(UIPickerView *)pV didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if(component == 0)
+        waveDrawMode = (WaveDrawMode) row;
+    else if(component == 1)
+        colorMode = (ColorMode) row;
+    else if ( component == 2)
+        yAxisScale = (WaveAxisScale) row;
+    
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 3;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    if(component == 0)
+       return [[ListenerViewController renderingModes] count];
+    else if(component == 1)
+        return [[ListenerViewController coloringModes] count];
+    else if(component == 2)
+        return [[ListenerViewController scalingModes] count];
+    else
+        return 0;
+}
+
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:18];
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    if(component == 0)
+        label.text = [[ListenerViewController renderingModes] objectAtIndex:row];
+    else if(component == 1)
+        label.text = [[ListenerViewController coloringModes] objectAtIndex:row];
+    else if(component == 2)
+        label.text = [[ListenerViewController scalingModes] objectAtIndex:row];
+    
+    return label;
+}
 
 -(void) handleSingleTap:(UITapGestureRecognizer *)gr {
     NSLog(@"handleSingleTap");
@@ -758,53 +813,6 @@ double clamp(double d, double min, double max) {
         paramAdjust = 4;
     self.currentBandsLabel.text = [NSString stringWithFormat:@"TextureLength = %f", paramAdjust];
     fftView.param = paramAdjust;
-}
-
-- (IBAction)drawModeChangedAction:(id)sender
-{
-    if (drawModeControl.selectedSegmentIndex == 0)
-        waveDrawMode = WAVE_LINE;
-    else if (drawModeControl.selectedSegmentIndex == 1)
-        waveDrawMode = WAVE_TEXTURE;
-    else if (drawModeControl.selectedSegmentIndex == 2)
-        waveDrawMode = WAVE_FLOWER;
-    else if (drawModeControl.selectedSegmentIndex == 3)
-        waveDrawMode = WAVE_BLOCKS;
-    else if (drawModeControl.selectedSegmentIndex == 4)
-        waveDrawMode = WAVE_WALL;
-    else if (drawModeControl.selectedSegmentIndex == 5)
-        waveDrawMode = WAVE_GRADIENT;
-    
-}
-
--(IBAction)logLinModeControlChangedAction:(id)sender
-{
-    if (logLinModeControl.selectedSegmentIndex == 0)
-        yAxisScale = WAVE_LINEAR_SCALE;
-    else if (logLinModeControl.selectedSegmentIndex == 1)
-        yAxisScale = WAVE_LOG_SCALE;
-    else if (logLinModeControl.selectedSegmentIndex == 2)
-        yAxisScale = WAVE_SQUARED_SCALE;
-}
-
-
--(IBAction)colorModeChangedAction:(id)sender
-{
-    if(colorModeControl.selectedSegmentIndex == 0)
-        colorMode = PEAK_HIGHLIGHT;
-    
-    else if(colorModeControl.selectedSegmentIndex == 1)
-        colorMode = CHROMATIC_SCALE;
-    
-    else if(colorModeControl.selectedSegmentIndex == 2)
-        colorMode = HSV_COLOR;
-    
-    else if(colorModeControl.selectedSegmentIndex == 3)
-        colorMode = DISCRETE_SCALE;
-    
-    else if(colorModeControl.selectedSegmentIndex == 4)
-        colorMode = GREY_SCALE;
-
 }
 
 -(void) printTouches
