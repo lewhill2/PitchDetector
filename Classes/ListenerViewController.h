@@ -72,21 +72,27 @@ typedef struct
     float cosLookup[1024];
     float sinLookup[1024];
 
-    float currentBands[1024][1024];
-    Byte outputData[1024][1024][4];
     CGFloat pointColor[4];
 
     float accel[3];
-    int touchCount;
+    NSUInteger touchCount;
     CGPoint touchPoints[20];
 
-    WaveDrawMode waveDrawMode;
-    ColorMode colorMode;
     WaveAxisScale yAxisScale;
 
     int currentFrame;
     int lastFrame;
+
+@public
+    float currentBands[1024][1024];
+    Byte outputData[1024][1024][4];
+
 }
+
+@property (nonatomic, assign) NSMutableArray* currentValueArray;
+@property WaveDrawMode waveDrawMode;
+@property ColorMode colorMode;
+
 
 @property(nonatomic, retain) IBOutlet UIView *controlPanelView;
 

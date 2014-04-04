@@ -17,6 +17,7 @@
 
 @synthesize currentPitchLabel, currentBandsLabel, listenButton, pitchKey, prevChar, isListening, rioRef;
 @synthesize currentFrequency, scaleSlider, paramSlider, accelerometer, controlPanelView, fftView, colorSpace, modePicker;
+@synthesize currentValueArray, waveDrawMode, colorMode;
 
 #pragma mark -
 #pragma mark Listener Controls
@@ -62,6 +63,10 @@
     rioRef = [RIOInterface sharedInstance];
     
     currentFrame = 0;
+    
+    currentValueArray = [[NSMutableArray alloc] initWithCapacity:1024];
+    for( int i = 0; i < 1024; i++)
+        [currentValueArray addObject:[NSNumber numberWithFloat:0]];
     
     scale = 0.5;
     scaleSlider.value = scale;
@@ -326,7 +331,6 @@
         float cosVal;
         float sinVal;
         
-        
         for(int i = 0; i < 1024; i++)
         {
             CGContextBeginPath(currentContext);
@@ -439,6 +443,7 @@
         CGContextRelease(bitmapContext);
         
         UIImage * newImage = [UIImage imageWithCGImage:cgImage];
+ 
         [fftView setImage:newImage];
 
         CGImageRelease(cgImage);
@@ -574,8 +579,11 @@
         currentFrame -= 1024;
     
     for ( int i = 0; i < n; i+=2 )
+    {
         currentBands[currentFrame][i/2] = newBands[i];
-    
+        //[currentValueArray setObject:[NSNumber numberWithFloat:newBands[i]] atIndexedSubscript:i/2] ;
+    }
+
     // compute/update freq and peak every 16 frames
     if( currentFrame % 16 == 0) // compute max val infrequently
     {
