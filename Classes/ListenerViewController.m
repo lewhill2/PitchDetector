@@ -50,8 +50,6 @@
 }
 
 
-
-
 #pragma mark -
 #pragma mark Lifecycle
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -214,6 +212,8 @@
     
     UIGraphicsBeginImageContext(renderSize);
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    CGContextSetShouldAntialias(currentContext, NO);
+
     
     // fill the background of the square with grey
     CGContextSetRGBFillColor(currentContext, accel[0], accel[1], accel[2],1.0);
